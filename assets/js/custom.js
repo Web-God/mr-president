@@ -49,6 +49,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
   // Shuffle cards and President's photos
   let shuffledCards = shuffle(medals);
   let shufflePresident = shuffle(imgPresident);
+  console.log("Shuffle Cards onLoad: ", shuffledCards);
+
+
   const fotoPresident = document.getElementById('center');
   const tips1 = document.querySelector('.tips1');
   const tips2 = document.querySelector('.tips2');
@@ -162,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }, 5000);
     luckyError.setAttribute('hidden', '');
     clearInterval(clockId);
+    countEven = 0;
   }
 
 
@@ -169,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     num = Math.floor(Math.random() * 25);
     resetTimer();
     resetBtn();
-
+    countEven = 0;
     pscore = 1000;
     scoreTotal();
 
@@ -181,7 +185,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     let copyCard = [...card];
     copyCard.map((c) => c.classList.remove('remove-card', 'matched'));
     containerCards.innerHTML = "";
-
+    shuffledCards
+    console.log("Shuffle Cards cancel: ", shuffledCards);
     // tips1.innerHTML = tipsArray[0];
   }
 
@@ -271,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       let cardHtml = '<div class="card"><img src="' + shuffledCards[i].url + '" data-id="' + shuffledCards[i].id + '" alt="' + shuffledCards[i].title + '" class="card_img" title="' + shuffledCards[i].title + '"></div>';
       document.getElementById('container__cards').innerHTML += cardHtml;
     }
-
+    console.log("Shuffle Cards onClick Start: ", shuffledCards);
 
     function delayedMatched() {
       timeoutMatch = window.setTimeout(match, 2000);
@@ -283,16 +288,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
      * @description If cards matched
      */
     function match() {
-      let numRandomTips = Math.floor(Math.random() * 4);
+      let numRandomTips = Math.floor(Math.random() * 3);
+      console.log("Random tips", numRandomTips);
         switch (numRandomTips) {
-          case 1:
+          case 0:
             tips1.classList.remove('hide');
             tips1.innerHTML = tipsArray[0];
             break;
-          case 2:
+          case 1:
             tips2.classList.remove('hide');
             tips2.innerHTML = tipsArray[1];
-          case 3:
+          case 2:
             tips3.classList.remove('hide');
             tips3.innerHTML = tipsArray[2];
             break;
@@ -346,7 +352,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             match();
             // delayedMatched()
             stockId = [];
-            greets();
+            countEven++;
+            if (countEven === 7) {
+              resetWin();
+            }
+            console.log("Even", countEven);
           }
 
           // Unmatched
@@ -377,7 +387,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     pscore = 1000;
     luckySubmit.classList.remove('disabled');
 
-    // shuffledCards
+    shuffledCards
+    console.log("Shuffle Cards Again: ", shuffledCards);
     // shufflePresident;
 
     displayPhotoPres(1, num);
@@ -388,11 +399,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // // Make a shallow copy of cardImage
     // let cards = [...cardImage];
     removeClassBack();
-
-    tips1.innerHTML = tipsArray[0];
+    containerCards.innerHTML = "";
+    shuffle(medals);
+    // Display deck of cards
+    for (let i = 0; i < cardNumber; i++) {
+      let cardHtml = '<div class="card"><img src="' + shuffledCards[i].url + '" data-id="' + shuffledCards[i].id + '" alt="' + shuffledCards[i].title + '" class="card_img" title="' + shuffledCards[i].title + '"></div>';
+      document.getElementById('container__cards').innerHTML += cardHtml;
+    }
 
     startTimer();
-    greets();
+    // greets();
+    if (countEven === 7) {
+      resetWin();
+    }
   }
 
   btnReset.addEventListener('click', resetGame);

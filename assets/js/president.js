@@ -82,7 +82,7 @@ export const imgPresident = [
     'mandat': '1959 - 1969',
     'src': 'https://static.elysee.fr/images/default/0001/02/2b14cc268d0be2c7c7605bca866fea0c24d55d09.jpeg?w=760&h=1145&s=1171bc3db73c679bb45bcffcd1b022e58fdfd935de2083ca27cd5c381a19b0ab',
     'indice': {
-      'tip1': 'Les gaulois n\'ont pas changé.Leurs chefs détestent obéir, mais ils adorent discuter.',
+      'tip1': 'Les gaulois n\'ont pas changé. Leurs chefs détestent obéir, mais ils adorent discuter.',
       'tip2': 'La guerre, c\'est comme la chasse, sauf qu\'à la guerre les lapins tirent',
       'tip3': 'Le patriotisme, c\'est aimer son pays. Le nationalisme, c\'est détester celui des autres'
     }
