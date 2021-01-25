@@ -1,0 +1,24 @@
+%input {
+    display: flex;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1em;
+    color: #8A1C2C;
+    padding: 5px 7px;
+    background-color: #FFFFFF;
+    border: none;
+}
+@mixin center {
+    margin: auto;
+}
+@mixin flexCenterX {
+    display: flex;
+    justify-content: center;
+}
+@mixin flexCenterY {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

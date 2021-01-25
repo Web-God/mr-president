@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <title>Mr Président</title>
+</head>
+
+<body>
+  <div id="root">
+    <div id="leftside">
+      <h2 class="logo">Mr le Président</h2>
+      <div class="clock timer">0h 0m 0s</div>
+      <div class="leftside_content-btn">
+        <div class="leftside_btn-start start"><span>Commencer</span><span><img src="assets/img/arrow_right_double_thin.png" alt=""></span></div>
+        <div class="leftside_btn-reset reset hide"><span>Annuler</span><span><img src="assets/img/x_icon.png" alt=""></span></div>
+
+      </div>
+      <div class="leftside_btn-tips hide">
+        <form action="index.html" id="lucky-form">
+          <input class="leftside_input-lucky" id="lucky" type="text" name="lucky" minLength="4" maxLength="40" size="10"
+            placeholder="Maradona" />
+            <button type="submit" class="btn-submit" id="lucky-submit">Je tente ma chance&nbsp;?</button>
+          </form>
+
+          <p id="error" hidden>Essaye encore !</p>
+        <p id="greets" hidden>Félicitations</p>
+      </div>
+      <button type="text" class="btn-submit hide" id="start-again" hidden>Recommencer&nbsp;?</button>
+    </div>
+    <div id="center">
+      <div class="rules">
+        <span class="btn-close">X</span>
+        <h3>Jeux du Président</h3>
+        <h4>But du jeu : Découvrir tous les Présidents de la République française</h4>
+        <p> Apparenté au jeu Memory</p>
+        <h5>Début du jeu</h5>
+        <p>
+          Une photo de chaque président est cachée.
+          Un indice textuel de la vie du président apparaît également.
+          Un champ réponse avec un bouton "Réponse" permet de d'essayer de deviner quel président se cache.
+          Au début de la partie une seule carte (déterminée aléatoirement) est retournée laissant apparaître une
+          partie du
+          visage.
+        </p>
+        <h5>Commencer le jeu</h5>
+        <p>
+          Cliquer sur les cartes pour découvrir les paires de cartes identiques
+          A chaque paire découverte, il est possible de donner une réponse.
+          Une paire retournée donne un indice supplémentaire et enlève des points.
+          Chaque fausse réponse enlève des points.
+          Le score est affiché et se décrémente à chaque paire retournée.
+        </p>
+        <h5>Découvrir un indice</h5>
+        <p>
+          Un bouton "Découvrir" permet de découvrir un paire et un indice, mais enlève des points.
+          On ne peut utiliser le bouton "Découvrir" que 3 fois
+          Le temps pour découvrir le président est prise en compte et donne un bonus.
+        </p>
+        <h5>Les points</h5>
+        <p>
+          Score max: 1000 (réponse avant de cliquer)
+          Bonus de 1mn: +100
+          Bonus de 2mn: +50
+          Bonus de 3mn: +10
+          Fausse réponse : -50
+          Paire retournée : -20
+          Découvrir: 1er -40, 2eme -60, 3eme -80
+        </p>
+        <h5>Fin du jeu</h5>
+        <p>
+          Le jeu se termine quand le joueur à trouver le nom du Président caché
+          La photo, le nom du Président, et les dates du mandat se dévoilent avec un résumé de son histoire, le
+          chiffre de la
+          république, un lien "En svoir plus" et une anecdote
+        </p>
+      </div>
+      <div id="container__cards"></div>
+    </div>
+
+    <div id="rightside">
+      <h1>Mr le Président</h1>
+      <div class="title_president hide">
+        <div class="title_president-name"></div>
+        <div class="title_president-mandat"></div>
+      </div>
+      <div class="score">1000 points</div>
+      <div class="tips1 hide"></div>
+      <div class="tips2 hide"></div>
+      <div class="tips3 hide"></div>
+    </div>
+  </div>
+  <script type="module" src="assets/js/custom.js"></script>
+</body>
+
+</html>

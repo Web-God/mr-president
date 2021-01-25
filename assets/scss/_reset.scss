@@ -1,0 +1,45 @@
+/*--------------------------------------------------------------*/
+/* Reset */
+/*--------------------------------------------------------------*/
+* {
+  box-sizing: border-box;
+}
+a {
+  color: $colorRed;
+  &:visited{
+    color: $colorRed;
+  }
+  &:hover,
+  &:focus,
+  &:active {
+    color: $colorBlue;
+    text-decoration: none;
+  }
+}
+
+%resetmp {
+  margin: 0;
+  padding: 0;
+}
+html,
+body,
+h5,
+figure,
+button,
+input {
+  @extend %resetmp;
+}
+
+ul,
+ol {
+  margin: 0 0 0 1.5rem;
+  padding: 0;
+}
+
+p {
+  margin-bottom: 1rem;
+  margin-top: 0.3em;
+}
+img {
+  width: 100%;
+}

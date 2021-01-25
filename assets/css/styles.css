@@ -1,0 +1,806 @@
+#rightside .score, input {
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  color: #8A1C2C;
+  padding: 5px 7px;
+  background-color: #FFFFFF;
+  border: none;
+}
+
+/*--------------------------------------------------------------*/
+/* Reset */
+/*--------------------------------------------------------------*/
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #8A1C2C;
+}
+a:visited {
+  color: #8A1C2C;
+}
+a:hover, a:focus, a:active {
+  color: #226A8A;
+  text-decoration: none;
+}
+
+html,
+body,
+h5,
+figure,
+button,
+input {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  margin: 0 0 0 1.5rem;
+  padding: 0;
+}
+
+p {
+  margin-bottom: 1rem;
+  margin-top: 0.3em;
+}
+
+img {
+  width: 100%;
+}
+
+/* FONT FACES */
+/* GARAMOND */
+@font-face {
+  font-family: "Garamond Bold";
+  src: url("../fonts/garamond/EBGaramond-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond Bold Italic";
+  src: url("../fonts/garamond/EBGaramond-BoldItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond Extra Bold";
+  src: url("../fonts/garamond/EBGaramond-ExtraBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond Italic";
+  src: url("../fonts/garamond/EBGaramond-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond Medium";
+  src: url("../fonts/garamond/EBGaramond-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond Medium Italic";
+  src: url("../fonts/garamond/EBGaramond-MediumItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond Regular";
+  src: url("../fonts/garamond/EBGaramond-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond SemiBold";
+  src: url("../fonts/garamond/EBGaramond-SemiBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Garamond SemiBold Italic";
+  src: url("../fonts/garamond/EBGaramond-SemiBoldItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Bold Italic";
+  src: url("../fonts/roboto/Roboto-BoldItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Italic";
+  src: url("../fonts/roboto/Roboto-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Light";
+  src: url("../fonts/roboto/Roboto-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto LightItalic";
+  src: url("../fonts/roboto/Roboto-LightItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Medium";
+  src: url("../fonts/roboto/Roboto-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto MediumItalic";
+  src: url("../fonts/roboto/Roboto-MediumItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Thin";
+  src: url("../fonts/roboto/Roboto-Thin.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto ThinItalic";
+  src: url("../fonts/roboto/Roboto-ThinItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* Roboto Slab */
+@font-face {
+  font-family: "Roboto-Slab Bold";
+  src: url("../fonts/roboto-slab/RobotoSlab-Bold-webfont.woff") format("woff"), url("../fonts/roboto-slab/RobotoSlab-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto-Slab";
+  src: url("../fonts/roboto-slab/RobotoSlab-Regular-webfont.woff") format("woff"), url("../fonts/roboto-slab/RobotoSlab-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto-Slab Light";
+  src: url("../fonts/roboto-slab/RobotoSlab-Light-webfont.woff") format("woff"), url("../fonts/roboto-slab/RobotoSlab-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto-Slab Thin";
+  src: url("../fonts/roboto-slab/RobotoSlab-Thin-webfont.woff") format("woff"), url("../fonts/roboto-slab/RobotoSlab-Thin.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* Playfair Display */
+@font-face {
+  font-family: "PlayfairDisplay-Black";
+  src: url("../fonts/playfair-display/PlayfairDisplay-Black.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-Black.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplay-BlackItalic";
+  src: url("../fonts/playfair-display/PlayfairDisplay-BlackItalic.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-BlackItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplay-Bold";
+  src: url("../fonts/playfair-display/PlayfairDisplay-Bold.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplay-BoldItalic";
+  src: url("../fonts/playfair-display/PlayfairDisplay-BoldItalic.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-BoldItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplay-Italic";
+  src: url("../fonts/playfair-display/PlayfairDisplay-Italic.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplay-Regular";
+  src: url("../fonts/playfair-display/PlayfairDisplay-Regular.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplaySC-Black";
+  src: url("../fonts/playfair-display/PlayfairDisplaySC-Black.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplaySC-BlackItalic";
+  src: url("../fonts/playfair-display/PlayfairDisplaySC-BlackItalic.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplaySC-Bold";
+  src: url("../fonts/playfair-display/PlayfairDisplaySC-Bold.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplaySC-BoldItalic";
+  src: url("../fonts/playfair-display/PlayfairDisplaySC-BoldItalic.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplaySC-Italic";
+  src: url("../fonts/playfair-display/PlayfairDisplaySC-Italic.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayfairDisplaySC-Regular";
+  src: url("../fonts/playfair-display/PlayfairDisplaySC-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+html {
+  font-size: 16px;
+  font-family: "Roboto";
+  height: 100vh;
+}
+
+h2, h1 {
+  font-family: "Garamond Medium";
+  font-weight: 400;
+  color: aliceblue;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+#root {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: ". . .";
+}
+
+input {
+  text-align: center;
+  font-size: 1.2em;
+  width: 250px;
+  height: 30px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+#leftside {
+  background-color: #226A8A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#center {
+  display: flex;
+  justify-content: center;
+  background-color: aliceblue;
+}
+
+#rightside {
+  background-color: #8A1C2C;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fade-in, .leftside_btn-tips #greets {
+  animation: fadeIn ease 2s;
+  -webkit-animation: fadeIn ease 2s;
+  -moz-animation: fadeIn ease 2s;
+  -o-animation: fadeIn ease 2s;
+  -ms-animation: fadeIn ease 2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fade-out, #container__cards .remove-card, #container__cards .matched {
+  animation: fadeOut ease 2s;
+  -webkit-animation: fadeOut ease 2s;
+  -moz-animation: fadeOut ease 2s;
+  -o-animation: fadeOut ease 2s;
+  -ms-animation: fadeOut ease 2s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-o-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-ms-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#leftside .logo {
+  width: 220px;
+}
+#leftside .clock {
+  width: 200px;
+  padding: 10px;
+  font-size: 1.7rem;
+  color: #226A8A;
+  text-align: center;
+  border: none;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+}
+
+.btn, .btn-submit, .content-btn .reset, .content-btn .start {
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  color: #8A1C2C;
+  padding: 5px 7px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
+.input, .btn-submit, .leftside_btn-tips #lucky, #leftside .clock {
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  color: #8A1C2C;
+  padding: 5px 7px;
+  background-color: #FFFFFF;
+  border: none;
+}
+
+.content-btn {
+  width: 220px;
+  display: flex;
+  margin-bottom: 1em;
+}
+.content-btn .start {
+  width: 150px;
+  margin-right: 1em;
+  border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -ms-border-radius: 5px 0 0 5px;
+  -o-border-radius: 5px 0 0 5px;
+}
+.content-btn .start:hover {
+  color: #226A8A;
+}
+.content-btn .reset {
+  width: 45px;
+  border-radius: 0 5px 5px 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  -moz-border-radius: 0 5px 5px 0;
+  -ms-border-radius: 0 5px 5px 0;
+  -o-border-radius: 0 5px 5px 0;
+}
+.content-btn .reset:hover {
+  color: #226A8A;
+}
+.content-btn .reset img {
+  width: 100%;
+}
+
+/*Lucky */
+.leftside_btn-tips {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+.leftside_btn-tips #lucky {
+  height: 45px;
+  margin-right: 1em;
+  padding: 5px 7px;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+}
+.leftside_btn-tips #greets {
+  font-family: "Garamond Regular";
+  position: absolute;
+  border: 5px solid #226A8A;
+  border-radius: 5px;
+  padding: 30px;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #8A1C2C;
+  font-size: 2rem;
+  background-color: #FAFAFA;
+  text-align: center;
+  z-index: 2;
+}
+.leftside_btn-tips #error {
+  text-align: center;
+  color: #FAFAFA;
+}
+.leftside_btn-tips img {
+  width: 100%;
+}
+
+.btn-submit {
+  height: 45px;
+  border: 2px solid #8A1C2C;
+  border-radius: 5px;
+  margin: 0.8em auto;
+}
+.btn-submit:hover {
+  color: #226A8A;
+}
+
+#center .title_president {
+  max-width: 450px;
+  height: 80px;
+  font-size: 1.4rem;
+  font-family: "Garamond";
+  color: #FAFAFA;
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+}
+#center .title_president span:nth-child(1) {
+  margin-right: 1em;
+}
+#center .title_president span:nth-child(1).name {
+  visibility: hidden;
+}
+
+.rules {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  padding: 1em;
+  color: #FFFFFF;
+  background-color: rgba(43, 162, 214, 0.9);
+  width: 50vw;
+  border: 1px solid #8A1C2C;
+  z-index: 2;
+}
+.rules p {
+  font-size: 0.8rem;
+}
+.rules .btn-close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #D64157;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.close, .hide {
+  display: none;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.show {
+  display: block;
+}
+
+.matched {
+  pointer-events: none;
+}
+
+#container__cards {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  grid-template-rows: repeat(7, calc(100vh/7));
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 2px;
+  grid-column-gap: 1px;
+}
+#container__cards .card {
+  background-color: #FFFFFF;
+  border: 1px solid #8A1C2C;
+  transition: transform 1s ease-in-out;
+  overflow: hidden;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  transform-style: preserve-3d;
+}
+#container__cards .card .card_img {
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
+}
+#container__cards .card .card_img:hover {
+  cursor: pointer;
+}
+#container__cards .card .rotate {
+  animation-name: flipInY;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+  animation-duration: 0.75s;
+}
+#container__cards .card .back {
+  transition: transform 1s ease-in-out;
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+  opacity: 1;
+  pointer-events: none;
+}
+#container__cards .matched {
+  opacity: 0;
+  pointer-events: none;
+}
+#container__cards .remove-card {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* animations */
+@keyframes flipInY {
+  from {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+  40% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+  80% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+  to {
+    transform: perspective(400px);
+  }
+}
+/* RIGHT SIDE */
+#rightside .title_president {
+  font-size: 1.4rem;
+  font-family: "Garamond";
+  color: #FAFAFA;
+  text-align: center;
+}
+#rightside .score {
+  text-align: center;
+  font-size: 2em;
+  width: 250px;
+  height: 60px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+#rightside .tips1, #rightside .tips2, #rightside .tips3 {
+  color: #FFFFFF;
+  margin-top: 2em;
+  width: 250px;
+  font-size: 1.1rem;
+  padding: 10px;
+  border: 1px solid #2BA2D6;
+  border-radius: 5px;
+}
+
+.leftside_content-btn {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.leftside_btn-start {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.leftside_btn-start span img {
+  position: relative;
+  top: 5px;
+  width: 25px;
+  height: 20px;
+}
+.leftside_btn-start span:nth-child(1) {
+  background-color: #dee2e6;
+  padding: 5px 25px;
+  margin-right: 1em;
+  border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -ms-border-radius: 5px 0 0 5px;
+  -o-border-radius: 5px 0 0 5px;
+  cursor: pointer;
+}
+.leftside_btn-start span:nth-child(1):hover {
+  color: #226A8A;
+}
+.leftside_btn-start span:nth-child(2) {
+  background-color: #dee2e6;
+  padding: 5px 10px;
+  border-radius: 0 5px 5px 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  -moz-border-radius: 0 5px 5px 0;
+  -ms-border-radius: 0 5px 5px 0;
+  -o-border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+.leftside_btn-reset span img {
+  position: relative;
+  top: 8px;
+  width: 25px;
+  height: 25px;
+}
+.leftside_btn-reset span:nth-child(1) {
+  background-color: #dee2e6;
+  padding: 5px 41px;
+  margin-right: 1em;
+  border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -ms-border-radius: 5px 0 0 5px;
+  -o-border-radius: 5px 0 0 5px;
+  cursor: pointer;
+}
+.leftside_btn-reset span:nth-child(1):hover {
+  color: #226A8A;
+}
+.leftside_btn-reset span:nth-child(2) {
+  background-color: #dee2e6;
+  width: 45px;
+  padding: 5px 10px;
+  border-radius: 0 5px 5px 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  -moz-border-radius: 0 5px 5px 0;
+  -ms-border-radius: 0 5px 5px 0;
+  -o-border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=styles.css.map */
