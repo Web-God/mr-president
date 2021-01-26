@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
      * @description If cards matched
      */
     function match() {
-      let numRandomTips = Math.floor(Math.random() * 3);
+      let numRandomTips = Math.floor(Math.random() * 6);
       console.log("Random tips", numRandomTips);
       switch (numRandomTips) {
         case 0:
