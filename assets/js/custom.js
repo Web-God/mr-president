@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   const cardImage = document.getElementsByClassName('card_img');
 
   // Init variables
-  luckyInput.value = "";
+  let userGuess;
   let cardId;
   let timeoutMatch;
   let timeoutUnMatch;
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     hour = 0;
     clearInterval(clockId);
     clock.innerHTML = hour + 'h ' + minute + "m " + second + 's';
-    luckyInput.value = "";
+    userGuess = "";
   }
 
 
@@ -256,7 +256,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     title.classList.remove('hide');
     luckyGreets.removeAttribute('hidden');
     btnStartAgain.classList.remove('hide');
-    luckySubmit.classList.add('disabled')
+    luckySubmit.classList.add('disabled');
+    luckyInput.disabled = true;
     timerId = setTimeout(() => {
       luckyGreets.setAttribute('hidden', '')
     }, 5000);
@@ -308,12 +309,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   // After click, check if input equal president's name
   function luckyTrySubmit(e) {
+    userGuess = String(luckyInput.value).toLowerCase();
+    let namePres = shufflePresident[num].name.toLowerCase();
+    let lastNamePres = shufflePresident[num].lastName.toLowerCase();
     e.preventDefault();
     // luckyForm.setAttribute('attr', 'value');
     // console.log("Target: ", e.target.previousElementSibling.value)
-    let inputValue = (luckyInput.value).toLowerCase();
-
-    if (inputValue.includes((shufflePresident[num].name).toLowerCase()) || inputValue.includes((shufflePresident[num].lastName).toLowerCase())) {
+    if (userGuess.includes(namePres) || userGuess.includes(lastNamePres)) {
       resetWin();
       luckyError.setAttribute('hidden', '');
       // Make a shallow copy of card
@@ -322,7 +324,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         c.classList.add('remove-card');
       })
     }
-    else if (inputValue === "" || inputValue !== (shufflePresident[num].name).toLowerCase()) {
+    else if (userGuess === "" || userGuess !== (shufflePresident[num].name).toLowerCase()) {
       luckyError.removeAttribute('hidden');
       pscore = pscore - 50;
     }
@@ -331,12 +333,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   scoreTotal();
 
-  // let greets = () => {
-  //   countEven++;
-  //   if (countEven === 7) {
-  //     resetWin();
-  //   }
-  // }
 
   // ON CLICK COMMENCER
   btnStart.addEventListener('click', () => {
@@ -352,6 +348,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     function disabledBtn() {
       btnStart.classList.add('disabled');
       clearTimerMatch();
+      luckyInput.focus();
     }
 
 
@@ -377,14 +374,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   let startAgain = () => {
     num = Math.floor(Math.random() * 25);
-
+    luckyInput.value = "";
     resetTimer();
     resetBtn();
 
     pscore = 1000;
     luckySubmit.classList.remove('disabled');
-
-
+    luckyInput.focus();
+    luckyInput.disabled = false;
     displayPhotoPres(1, num);
 
 

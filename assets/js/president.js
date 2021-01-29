@@ -40,7 +40,8 @@ export const imgPresident = [
     'indice': {
       'tip1': 'On greffe de tout aujourd\'hui, des reins, des bras, un coeur. Sauf les couilles. Par manque de donneur.',
       'tip2': 'Trop de jeunes se croient sans avenir, alors qu\'ils sont sans objectif',
-      'tip3': 'Ne composez jamais avec l\'extrémisme, le racisme, l\'antisémitisme ou le rejet de l\'autre'
+      'tip3': 'Ne composez jamais avec l\'extrémisme, le racisme, l\'antisémitisme ou le rejet de l\'autre',
+      'tip4': 'Notre maison brûle et nous regardons ailleurs'
     }
   },
   {
