@@ -1,12 +1,6 @@
 import { medals } from '/president/assets/js/medals.js';
-import { imgPresident } from '/president/assets/js/president.js';
-
-try {
-
-} catch (error) {
-
-}
-
+import * as presidentJs from '/president/assets/js/president.js';
+import * as President from '/president/assets/js/class.js';
 
 document.addEventListener("DOMContentLoaded", function (event) {
   "use strict";
@@ -48,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   // Shuffle cards and President's photos
   let shuffledCards = shuffle(medals);
-  let shufflePresident = shuffle(imgPresident);
+  let shufflePresident = shuffle(presidentJs.imgPresident);
 
 
   const fotoPresident = document.getElementById('center');
@@ -138,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
      */
     function match() {
       let numRandomTips = Math.floor(Math.random() * 5);
-      console.log("Random tips", numRandomTips);
       switch (numRandomTips) {
         case 0:
           tips1.classList.remove('hide');
@@ -199,14 +192,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if (countEven === 7) {
               resetWin();
             }
-            console.log("Even", countEven);
           }
 
           // Unmatched
           else if (stockId[0] !== stockId[1]) {
             delayedAfterUnmatched();
             stockId = [];
-            pscore = pscore -30;
+            pscore = pscore - 30;
           }
         }
       });
@@ -214,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }
 
 
-// Rules
+  // Rules
   let closeRules = () => {
     rules.classList.add('fade-out');
     closeId = setTimeout(() => {
@@ -224,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   btnClose.addEventListener('click', closeRules);
 
 
-// Score
+  // Score
   function scoreTotal() {
     total = pscore + " points";
     scoreDisplay.innerHTML = total;
@@ -407,4 +399,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
   btnStartAgain.addEventListener('click', startAgain);
+
+let birthDate;
+let deathDate;
+  let adolphe = new President("Adolphe", "Thiers", birthDate, deathDate, "Il quitte le pouvoir, renversé par une Assemblée à majorité monarchique, hostile à sa conception de la République conservatrice");
+  console.log("Adolphe", adolphe.render());
+  console.log(adolphe.tips);
+  let patrice = new President("Patrice", "de Mac Mahon", "13/07/1808", "8/10/1893", "Deuxième gouvernement de Broglie.");
+  console.log("Patrice", patrice.render());
 });
