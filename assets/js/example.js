@@ -71,3 +71,56 @@ const game = new MemoryGame;
 game.cards.forEach(card => {
 	card.addEventListener('click', game.flip.bind(game, card));
 })
+
+
+
+/**
+ *
+ * @param {number} longueur
+ */
+function Ligne(longueur) {
+	this.longueur = longueur;
+}
+Ligne.prototype.taille = function () {
+	'Longueur : ' + this.longueur
+	console.log("Ligne", this.longueur)
+};
+let tailleLigne = new Ligne(45);
+tailleLigne.taille();
+
+
+/**
+ *
+ * @param {number} longueur
+ * @param {number} largeur
+ */
+function Rectangle(longueur, largeur) {
+	Ligne.call(this, longueur);
+	this.largeur = largeur;
+}
+Rectangle.prototype = Object.create(Ligne.prototype);
+Rectangle.prototype.constructor = Rectangle;
+Rectangle.prototype.aire = function () {
+	tips2.innerHTML =
+		'Aire : ' + this.longueur * this.largeur
+	console.log("Rectangle", this.longueur * this.largeur)
+};
+let aireRectangle = new Rectangle(12, 5);
+aireRectangle.aire();
+
+
+function Parallelepipede(longueur, largeur, hauteur) {
+	Rectangle.call(this, longueur, largeur);
+	this.hauteur = hauteur;
+}
+Parallelepipede.prototype = Object.create(Rectangle.prototype);
+Parallelepipede.prototype.constructor = Parallelepipede;
+Parallelepipede.prototype.volume = function () {
+	tips3.innerHTML =
+		'Volume : ' + this.longueur * this.largeur * this.hauteur
+};
+
+let geo = new Parallelepipede(15, 14, 13);
+  // geo.volume();
+  // geo.aire();
+  // geo.taille();

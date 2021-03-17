@@ -12,7 +12,7 @@
   <div id="root">
     <div id="leftside">
       <h2 class="logo">Mr le Président</h2>
-      <div class="clock timer">0h 0m 0s</div>
+      <div class="clock timer">0m 0s</div>
       <div class="leftside_content-btn">
         <div class="leftside_btn-start start"><span>Commencer</span><span><img src="assets/img/arrow_right_double_thin.png" alt=""></span></div>
         <div class="leftside_btn-reset reset hide"><span>Annuler</span><span><img src="assets/img/x_icon.png" alt=""></span></div>
@@ -25,13 +25,18 @@
           </form>
 
           <p id="error" hidden>Essaye encore !</p>
-        <p id="greets" hidden>Félicitations</p>
+          <div id="greets" hidden>
+            <span class="btn-close-greets"></span>
+            <p>Félicitations</p>
+            <p class="nclick"></p>
+          </div>
       </div>
       <button type="text" class="btn-submit hide" id="start-again" hidden>Recommencer&nbsp;?</button>
     </div>
     <div id="center">
+      <div id="morebnf"></div>
       <div class="rules">
-        <span class="btn-close">X</span>
+        <span class="btn-close-rules"></span>
         <h3>Jeux du Président</h3>
         <h4>But du jeu : Découvrir tous les Présidents de la République française</h4>
         <p> Apparenté au jeu Memory</p>
@@ -76,7 +81,7 @@
           république, un lien "En svoir plus" et une anecdote
         </p>
       </div>
-      <div id="container__cards"></div>
+      <div id="cards__container"></div>
     </div>
 
     <div id="rightside">
@@ -86,13 +91,19 @@
         <div class="title_president-mandat"></div>
       </div>
       <div class="score">1000 points</div>
-      <div class="tips1 hide"></div>
-      <div class="tips2 hide"></div>
-      <div class="tips3 hide"></div>
+      <div id="indices"></div>
+      <button class="more hide">En savoir +</button>
     </div>
   </div>
+  <script src="assets/js/shuffle.js"></script>
+  <script type="module" src="assets/js/game_v1.js"></script>
+  <!-- <script type="module" src="assets/js/game_v1.js"></script> -->
+  <!-- <script src="assets/js/initvar.js"></script> -->
+  <!-- <script src="assets/js/bnf.js"></script> -->
   <!-- <script type="module" src="assets/js/custom_v2.js" async></script> -->
-  <script type="module" src="assets/js/custom_v3.js"></script>
+  <!-- <script type="module" src="assets/js/controller.js"></script> -->
+  <!-- <script type="module" src="assets/js/view.js"></script> -->
+  <!-- <script src="assets/js/axios.min.js"></script> -->
 </body>
 
 </html>

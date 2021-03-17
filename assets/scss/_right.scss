@@ -5,6 +5,7 @@
     font-family: 'Garamond';
     color: $colorFade;
     text-align: center;
+    text-transform: capitalize;
   }
   .score {
     @extend %input;
@@ -19,7 +20,7 @@
     -o-border-radius: 5px;
   }
 
-  .tips1, .tips2, .tips3 {
+  .indice {
     color: $white;
     margin-top: 2em;
     width: 250px;
@@ -48,6 +49,10 @@
         top: 5px;
         width: 25px;
         height: 20px;
+        // transition: transform 0.5s;
+        &:hover {
+          animation:  translateLeft ease-in-out .5s;
+        }
       }
 
       &:nth-child(1) {
@@ -86,6 +91,10 @@
         top: 8px;
         width: 25px;
         height: 25px;
+        transition: transform 0.5s;
+        &:hover {
+          transform: rotate(90deg);
+        }
       }
 
       &:nth-child(1) {

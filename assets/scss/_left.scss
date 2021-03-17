@@ -110,6 +110,10 @@
     background-color: $colorFade;
     text-align: center;
     z-index: 2;
+    .nclick div {
+      text-transform: capitalize;
+      color: $colorBlue;
+    }
   }
 
   #error {
