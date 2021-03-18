@@ -21,51 +21,6 @@ export function Game(options) {
 };
 
 
-let points = 1000,
-	numberOfClick = 0,
-	clockId;
-	Game.prototype.timerGame = function () {
-	this.chrono = new Date(1980, 6, 31);
-	this.seconds = this.chrono.getSeconds();
-	this.minutes = this.chrono.getMinutes();
-	clockId = setInterval(() => {
-		this.seconds += 1;
-		if (this.seconds > 59) {
-			this.minutes += 1;
-			this.seconds = 0;
-		}
-		elementsGame.elements.clock.innerHTML = this.minutes + "m " + this.seconds + 's';
-		myScore.scoreTotal();
-	}, this.duration);
-}
-let timerClock = new Game();
-
-
-Game.prototype.resetTimer = function () {
-	this.total = 1000;
-	this.seconds = 0;
-	this.minutes = 0;
-	clearInterval(clockId);
-	elementsGame.elements.scoreDisplay.innerHTML = "1000 points";
-	elementsGame.elements.clock.innerHTML = this.minutes + "m " + this.seconds + 's';
-}
-let resetClock = new Game();
-
-
-Game.prototype.scoreTotal = function () {
-	points = Math.max(0, points - 1);
-	this.total = points + " points";
-	if (points === 0) {
-		uWin.resetWin();
-		elementsGame.elements.containerCards.innerHTML = "";
-		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
-		elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu !<div> " + fullName + "</div> est l'élu";
-	}
-	elementsGame.elements.scoreDisplay.innerHTML = this.total;
-}
-let myScore = new Game();
-
-
 Game.prototype.registerElements = function () {
 	elementsGame.elements = {
 		// Declare variables buttons
@@ -114,6 +69,51 @@ Game.prototype.events = function () {
 	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(president.url, '_blank'));
 }
 let eventsClick = new Game();
+
+
+let points = 1000,
+	numberOfClick = 0,
+	clockId;
+Game.prototype.timerGame = function () {
+	this.chrono = new Date(1980, 6, 31);
+	this.seconds = this.chrono.getSeconds();
+	this.minutes = this.chrono.getMinutes();
+	clockId = setInterval(() => {
+		this.seconds += 1;
+		if (this.seconds > 59) {
+			this.minutes += 1;
+			this.seconds = 0;
+		}
+		elementsGame.elements.clock.innerHTML = this.minutes + "m " + this.seconds + 's';
+		myScore.scoreTotal();
+	}, this.duration);
+}
+let timerClock = new Game();
+
+
+Game.prototype.resetTimer = function () {
+	this.total = 1000;
+	this.seconds = 0;
+	this.minutes = 0;
+	clearInterval(clockId);
+	elementsGame.elements.scoreDisplay.innerHTML = "1000 points";
+	elementsGame.elements.clock.innerHTML = this.minutes + "m " + this.seconds + 's';
+}
+let resetClock = new Game();
+
+
+Game.prototype.scoreTotal = function () {
+	points = Math.max(0, points - 1);
+	this.total = points + " points";
+	if (points === 0) {
+		uWin.resetWin();
+		elementsGame.elements.containerCards.innerHTML = "";
+		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
+		elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu !<div> " + fullName + "</div> est l'élu";
+	}
+	elementsGame.elements.scoreDisplay.innerHTML = this.total;
+}
+let myScore = new Game();
 
 
 let president,
@@ -275,6 +275,7 @@ Game.prototype.resetWin = function () {
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
 	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations";
 	elementsGame.elements.nbrClick.innerHTML = "Vous avez élu<div> " + fullName + "</div> avec " + numberOfClick + " clicks";
+	elementsGame.elements.rewards.innerHTML = "";
 	clearInterval(clockId);
 	shuffle(medals);
 	// Display HTML for Indices
