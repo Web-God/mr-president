@@ -369,7 +369,6 @@ let tipsMatched = new Game();
 
 Game.prototype.stopEvent = function () {
 	elementsGame.elements.containerCards.classList.add('disabled');
-
 	setTimeout(() => {
 		elementsGame.elements.containerCards.classList.remove('disabled');
 	}, this.duration);
