@@ -55,6 +55,12 @@ let resetClock = new Game();
 Game.prototype.scoreTotal = function () {
 	points = Math.max(0, points - 1);
 	this.total = points + " points";
+	if (points === 0) {
+		uWin.resetWin();
+		elementsGame.elements.containerCards.innerHTML = "";
+		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
+		elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu<div> " + fullName + "</div> est l'élu";
+	}
 	elementsGame.elements.scoreDisplay.innerHTML = this.total;
 }
 let myScore = new Game();
@@ -248,7 +254,7 @@ Game.prototype.resetWin = function () {
 	elementsGame.elements.luckySubmit.classList.add('hide');
 	elementsGame.elements.luckyInput.disabled = true;
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
-
+	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations";
 	elementsGame.elements.nbrClick.innerHTML = "Vous avez élu<div> " + fullName + "</div> avec " + numberOfClick + " clicks";
 
 	clearInterval(clockId);
