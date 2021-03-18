@@ -234,6 +234,30 @@ Game.prototype.resetGame = function (n) {
 	elementsGame.elements.containerCards.innerHTML = "";
 };
 
+// Reset Game when user won
+Game.prototype.resetWin = function () {
+	elementsGame.elements.title.classList.remove('hide');
+	elementsGame.elements.luckyGreets.removeAttribute('hidden');
+	elementsGame.elements.luckyGreets.classList.remove('close');
+	elementsGame.elements.btnStartAgain.classList.remove('hide');
+	elementsGame.elements.btnSeeMore.classList.remove('hide');
+	elementsGame.elements.luckySubmit.classList.add('hide');
+	elementsGame.elements.luckyInput.value = "";
+	elementsGame.elements.luckyInput.disabled = true;
+	elementsGame.elements.luckyError.setAttribute('hidden', '');
+	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations";
+	elementsGame.elements.nbrClick.innerHTML = "Vous avez élu<div> " + fullName + "</div> avec " + numberOfClick + " clicks";
+	elementsGame.elements.rewards.innerHTML = "";
+	clearInterval(clockId);
+	shuffle(medals);
+	// Display HTML for Indices
+	for (let index = 0; index < this.tipsPresident.length; index++) {
+		let tipsHtml = document.querySelector('.' + this.tipsPresident[index] + '');
+		tipsHtml.innerHTML = elementsGame.elements.tipsArray[index];
+		tipsHtml.classList.remove('hide');
+	}
+};
+let uWin = new Game();
 
 // Check if input equal president's name
 Game.prototype.luckyGuess = function (e) {
@@ -260,32 +284,6 @@ Game.prototype.enableBtn = function () {
 	elementsGame.elements.luckyInput.focus();
 };
 let displayBtn = new Game();
-
-
-// Reset Game when user won
-Game.prototype.resetWin = function () {
-	elementsGame.elements.title.classList.remove('hide');
-	elementsGame.elements.luckyGreets.removeAttribute('hidden');
-	elementsGame.elements.luckyGreets.classList.remove('close');
-	elementsGame.elements.btnStartAgain.classList.remove('hide');
-	elementsGame.elements.btnSeeMore.classList.remove('hide');
-	elementsGame.elements.luckySubmit.classList.add('hide');
-	elementsGame.elements.luckyInput.value = "";
-	elementsGame.elements.luckyInput.disabled = true;
-	elementsGame.elements.luckyError.setAttribute('hidden', '');
-	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations";
-	elementsGame.elements.nbrClick.innerHTML = "Vous avez élu<div> " + fullName + "</div> avec " + numberOfClick + " clicks";
-	elementsGame.elements.rewards.innerHTML = "";
-	clearInterval(clockId);
-	shuffle(medals);
-	// Display HTML for Indices
-	for (let index = 0; index < this.tipsPresident.length; index++) {
-		let tipsHtml = document.querySelector('.' + this.tipsPresident[index] + '');
-		tipsHtml.innerHTML = elementsGame.elements.tipsArray[index];
-		tipsHtml.classList.remove('hide');
-	}
-};
-let uWin = new Game();
 
 
 // Display Indices
