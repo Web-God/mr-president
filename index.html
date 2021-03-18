@@ -24,8 +24,8 @@
         </form>
 
         <p id="error" hidden>Essaye encore !</p>
-        <div id="greets" hidden onclick="this.classList.add('close')">
-          <span class="btn-close-greets"></span>
+        <div id="greets" hidden>
+          <span class="btn-close-greets" onclick="this.parentNode.classList.add('close')"></span>
           <p></p>
           <p class="nclick"></p>
         </div>
@@ -97,13 +97,6 @@
   </div>
   <script src="assets/js/shuffle.js"></script>
   <script type="module" src="assets/js/game_v1.js"></script>
-  <!-- <script type="module" src="assets/js/game_v1.js"></script> -->
-  <!-- <script src="assets/js/initvar.js"></script> -->
-  <!-- <script src="assets/js/bnf.js"></script> -->
-  <!-- <script type="module" src="assets/js/custom_v2.js" async></script> -->
-  <!-- <script type="module" src="assets/js/controller.js"></script> -->
-  <!-- <script type="module" src="assets/js/view.js"></script> -->
-  <!-- <script src="assets/js/axios.min.js"></script> -->
 </body>
 
 </html>
