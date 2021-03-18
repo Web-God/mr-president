@@ -22,9 +22,9 @@ export function Game(options) {
 
 
 let points = 1000,
-		clockId,
-		numberOfClick = 0;
-Game.prototype.timerGame = function () {
+	numberOfClick = 0,
+	clockId;
+	Game.prototype.timerGame = function () {
 	this.chrono = new Date(1980, 6, 31);
 	this.seconds = this.chrono.getSeconds();
 	this.minutes = this.chrono.getMinutes();
@@ -59,7 +59,7 @@ Game.prototype.scoreTotal = function () {
 		uWin.resetWin();
 		elementsGame.elements.containerCards.innerHTML = "";
 		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
-		elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu<div> " + fullName + "</div> est l'élu";
+		elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu !<div> " + fullName + "</div> est l'élu";
 	}
 	elementsGame.elements.scoreDisplay.innerHTML = this.total;
 }
@@ -81,6 +81,7 @@ Game.prototype.registerElements = function () {
 		// Display variables pic's president + tips
 		fotoPresident: document.getElementById('center'),
 		indices: document.getElementById('indices'),
+		rewards: document.querySelector('.rewards'),
 		// Declare variables Title for President's names
 		title: document.querySelector('.title_president'),
 		titleName: document.querySelector('.title_president-name'),
@@ -105,29 +106,23 @@ elementsGame.registerElements();
 
 
 Game.prototype.events = function () {
-	// Shuffle President's Pic
-	elementsGame.elements.btnSeeMore.addEventListener('click', this.redirectMore);
-	// Close Rules
-	elementsGame.elements.btnCloseRules.addEventListener('click', this.closeRules);
-	elementsGame.elements.btnCloseGreets.addEventListener('click', this.closeGreets);
-	// Display HTML for Indices
-	elementsGame.elements.btnReset.addEventListener('click', this.resetGame);
-	elementsGame.elements.btnStartAgain.addEventListener('click', this.startAgain.bind(this));
-
 	elementsGame.elements.btnStart.addEventListener('click', this.startGame.bind(this));
+	elementsGame.elements.btnStartAgain.addEventListener('click', this.startAgain.bind(this));
+	elementsGame.elements.btnReset.addEventListener('click', this.resetGame);
 	elementsGame.elements.luckySubmit.addEventListener('click', this.luckyGuess);
+	// Open new tab to Elysée website
+	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(president.url, '_blank'));
 }
 let eventsClick = new Game();
 
 
-
 let president,
-		fullName,
-		lastName;
-		/**
-		 * @description random President pic
-		 * @param {number} n
-		 */
+	fullName,
+	lastName;
+/**
+ * @description random President pic
+ * @param {number} n
+ */
 Game.prototype.shufflePhotos = function (n) {
 	president = this.shufflePresident[n];
 	fullName = president.name.toLowerCase();
@@ -138,7 +133,6 @@ Game.prototype.shufflePhotos = function (n) {
 		backgroundRepeat: "no-repeat",
 		backgroundColor: "rgba(255, 255, 255, 1)"
 	}
-
 	Object.assign(elementsGame.elements.fotoPresident.style, stylesPres);
 	// Display title
 	elementsGame.elements.titleName.innerHTML = fullName;
@@ -151,74 +145,57 @@ Game.prototype.shufflePhotos = function (n) {
 let randomPhotos = new Game();
 randomPhotos.shufflePhotos(0);
 
+/**
+ *
+ * @param {number} n
+ */
+Game.prototype.initParams = function (n) {
+	this.userGuess = "";
+	this.countEven = 0;
+	numberOfClick = 0;
+	points = 1000;
+	n = Math.floor(Math.random() * 25);
+	randomPhotos.shufflePhotos(n);
+}
+let params = new Game();
+
+Game.prototype.init = function (n) {
+	params.initParams();
+	timerClock.timerGame();
+	displayPresidentOfCards.displayPresident();
+	clickOnCard.clickCard();
+	tipIndices.indices();
+}
+let initGame = new Game();
+
 
 // Start Game
 Game.prototype.startGame = function (n) {
-	points = 1000;
-	this.countEven = 0;
-	numberOfClick = 0;
-	n = Math.floor(Math.random() * 25);
-	randomPhotos.shufflePhotos(n);
-	timerClock.timerGame();
-	disabledBtnStart.btnStart();
+	initGame.init();
 	displayBtn.enableBtn();
-	displayPresidentOfCards.displayPresident();
-	closeRulesGame.closeRules();
-	elementsGame.elements.luckyInput.disabled = false;
-	tipIndices.indices();
-	clickOnCard.clickCard();
-};
-
-
-// When click, check if input equal president's name
-Game.prototype.luckyGuess = function (e) {
-	e.preventDefault();
-	let userGuess = String(elementsGame.elements.luckyInput.value).toLowerCase();
-	if (userGuess.includes(fullName) || userGuess.includes(lastName)) {
-		uWin.resetWin();
-		elementsGame.elements.luckyError.setAttribute('hidden', '');
-		elementsGame.elements.containerCards.innerHTML = "";
-	}
-	else {
-		elementsGame.elements.luckyError.removeAttribute('hidden');
-		points = points - 150;
-	}
-}
-
-
-Game.prototype.closeRules = function () {
 	elementsGame.elements.rules.classList.add('close');
-};
-let closeRulesGame = new Game();
-
-
-// Close Greets
-Game.prototype.closeGreets = function () {
-	elementsGame.elements.luckyGreets.classList.add('close');
-};
-
-
-// Enable Buttons
-Game.prototype.enableBtn = function () {
-	elementsGame.elements.btnReset.classList.remove('hide');
-	elementsGame.elements.luckySubmit.classList.remove('hide');
-	elementsGame.elements.lucky.classList.remove('hide');
-	elementsGame.elements.luckyInput.value = "";
-	elementsGame.elements.luckyInput.focus();
-};
-let displayBtn = new Game();
-
-
-// Disabled Start button
-Game.prototype.btnStart = function () {
+	elementsGame.elements.luckyInput.disabled = false;
 	elementsGame.elements.btnStart.classList.add('trans');
-	elementsGame.elements.btnStart.disabled = true;
 };
-let disabledBtnStart = new Game();
+
+/**
+ *
+ * @param {number} n
+ * @description When click on "Recommencer"
+ */
+Game.prototype.startAgain = function (n) {
+	// Empty container before init
+	elementsGame.elements.indices.innerHTML = "";
+	elementsGame.elements.luckyInput.disabled = false;
+	params.initParams();
+	removeBtn.resetBtn();
+	initGame.init();
+	shuffle(medals);
+};
 
 
-// Display president of cards
-Game.prototype.displayPresident =  function()  {
+// Display deck cards
+Game.prototype.displayPresident = function () {
 	for (let i = 0; i < this.cardNumber; i++) {
 		let cardHtml = '<div class="card"><img src="' + this.shuffledCards[i].url + '" data-id="' + this.shuffledCards[i].id + '" alt="' + this.shuffledCards[i].title + '" class="card_img"></div>';
 		elementsGame.elements.containerCards.innerHTML += cardHtml;
@@ -244,6 +221,47 @@ Game.prototype.resetBtn = function () {
 let removeBtn = new Game();
 
 
+
+// Reset game on click "Annuler"
+Game.prototype.resetGame = function (n) {
+	params.initParams();
+	resetClock.resetTimer();
+	elementsGame.elements.indices.innerHTML = "";
+	removeBtn.resetBtn();
+	elementsGame.elements.btnReset.classList.add('hide');
+	elementsGame.elements.lucky.classList.add('hide');
+	elementsGame.elements.btnStart.classList.remove('trans');
+	elementsGame.elements.containerCards.innerHTML = "";
+};
+
+
+// Check if input equal president's name
+Game.prototype.luckyGuess = function (e) {
+	e.preventDefault();
+	let userGuess = String(elementsGame.elements.luckyInput.value).toLowerCase();
+	if (userGuess.includes(fullName) || userGuess.includes(lastName)) {
+		uWin.resetWin();
+		elementsGame.elements.luckyError.setAttribute('hidden', '');
+		elementsGame.elements.containerCards.innerHTML = "";
+	}
+	else {
+		elementsGame.elements.luckyError.removeAttribute('hidden');
+		points = points - 150;
+	}
+}
+
+
+// Enable Buttons
+Game.prototype.enableBtn = function () {
+	elementsGame.elements.btnReset.classList.remove('hide');
+	elementsGame.elements.luckySubmit.classList.remove('hide');
+	elementsGame.elements.lucky.classList.remove('hide');
+	elementsGame.elements.luckyInput.value = "";
+	elementsGame.elements.luckyInput.focus();
+};
+let displayBtn = new Game();
+
+
 // Reset Game when user won
 Game.prototype.resetWin = function () {
 	elementsGame.elements.title.classList.remove('hide');
@@ -252,15 +270,13 @@ Game.prototype.resetWin = function () {
 	elementsGame.elements.btnStartAgain.classList.remove('hide');
 	elementsGame.elements.btnSeeMore.classList.remove('hide');
 	elementsGame.elements.luckySubmit.classList.add('hide');
+	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.disabled = true;
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
 	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations";
 	elementsGame.elements.nbrClick.innerHTML = "Vous avez élu<div> " + fullName + "</div> avec " + numberOfClick + " clicks";
-
 	clearInterval(clockId);
-
 	shuffle(medals);
-
 	// Display HTML for Indices
 	for (let index = 0; index < this.tipsPresident.length; index++) {
 		let tipsHtml = document.querySelector('.' + this.tipsPresident[index] + '');
@@ -269,25 +285,6 @@ Game.prototype.resetWin = function () {
 	}
 };
 let uWin = new Game();
-
-
-// Reset game on click "Annuler"
-Game.prototype.resetGame = function (n) {
-	n = Math.floor(Math.random() * 25);
-	randomPhotos.shufflePhotos(n);
-
-	resetClock.resetTimer();
-
-	this.userGuess = "";
-	this.countEven = 0;
-
-	removeBtn.resetBtn();
-	elementsGame.elements.btnReset.classList.add('hide');
-	elementsGame.elements.lucky.classList.add('hide');
-	elementsGame.elements.btnStart.classList.remove('trans');
-	elementsGame.elements.containerCards.innerHTML = "";
-	elementsGame.elements.indices.innerHTML = "";
-};
 
 
 // Display Indices
@@ -304,21 +301,29 @@ let tipIndices = new Game();
 Game.prototype.clickCard = function () {
 	// Make a shallow copy of cardImage to add classes back
 	let cards = [...elementsGame.elements.cardImage],
-	flippedCards,
-	firstCard,
-	secondCard,
-	countEven = 0,
-	duration = this.duration;
-	cards.forEach( function (mask) {
+		flippedCards,
+		firstCard,
+		secondCard,
+		countEven = 0,
+		duration = this.duration;
+	cards.forEach(function (mask) {
 		mask.addEventListener('click', function () {
+			const displayRewards = mask.getAttribute("alt");
 			numberOfClick++;
 			mask.classList.add('back');
 			flippedCards = cards.filter(card => card.classList.contains('back'));
-			if (flippedCards.length === 2){
+			firstCard = flippedCards[0];
+			secondCard = flippedCards[1];
+
+			// Display name of rewards
+			elementsGame.elements.rewards.innerHTML = displayRewards;
+			if(secondCard) {
+				elementsGame.elements.rewards.innerHTML = "";
+			}
+
+			if (flippedCards.length === 2) {
 				elementsGame.elements.containerCards.classList.add('disabled');
-				firstCard = flippedCards[0];
-				secondCard = flippedCards[1];
-				if(firstCard.dataset.id === secondCard.dataset.id){
+				if (firstCard.dataset.id === secondCard.dataset.id) {
 					tipsMatched.indicesMatched();
 					countEven++;
 					points = Math.min(1000, points + 20);
@@ -327,7 +332,7 @@ Game.prototype.clickCard = function () {
 						secondCard.parentNode.classList.add('matched');
 					}, duration);
 
-					setTimeout(()=> {
+					setTimeout(() => {
 						firstCard.classList.remove('back');
 						secondCard.classList.remove('back');
 					}, duration);
@@ -362,7 +367,7 @@ Game.prototype.indicesMatched = function () {
 let tipsMatched = new Game();
 
 
-Game.prototype.stopEvent = function() {
+Game.prototype.stopEvent = function () {
 	elementsGame.elements.containerCards.classList.add('disabled');
 
 	setTimeout(() => {
@@ -370,39 +375,3 @@ Game.prototype.stopEvent = function() {
 	}, this.duration);
 }
 let disableDeck = new Game();
-
-
-Game.prototype.redirectMore = function () {
-	window.open(president.url, '_blank');
-};
-
-
-/**
- *
- * @param {number} n
- * @description When click on "Recommencer"
- */
-Game.prototype.startAgain = function (n) {
-	points = 1000;
-	this.userGuess = "";
-	this.countEven = 0;
-	numberOfClick = 0;
-
-	n = Math.floor(Math.random() * 25);
-	randomPhotos.shufflePhotos(n);
-
-	timerClock.timerGame();
-
-	for (let index = 0; index < this.tipsPresident.length; index++) {
-		let tipsHtml = document.querySelector('.' + this.tipsPresident[index] + '');
-		tipsHtml.classList.add('hide');
-	}
-
-	removeBtn.resetBtn();
-	elementsGame.elements.luckyInput.disabled = false;
-
-	shuffle(medals);
-
-	displayPresidentOfCards.displayPresident();
-	clickOnCard.clickCard();
-};

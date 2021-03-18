@@ -341,6 +341,11 @@ input {
   -ms-border-radius: 12px;
   -o-border-radius: 12px;
 }
+#leftside .rewards {
+  width: 235px;
+  text-align: center;
+  color: #FAFAFA;
+}
 
 .btn, .more, .btn-submit, .content-btn .reset, .content-btn .start {
   display: flex;
