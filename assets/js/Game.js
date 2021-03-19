@@ -315,13 +315,12 @@ Game.prototype.clickCard = function () {
 			flippedCards = cards.filter(card => card.classList.contains('back'));
 			firstCard = flippedCards[0];
 			secondCard = flippedCards[1];
-
 			// Display name of rewards
 			elementsGame.elements.rewards.innerHTML = displayRewards;
-			if(secondCard) {
+			if (secondCard) {
 				elementsGame.elements.rewards.innerHTML = "";
 			}
-
+			// If medals matched
 			if (flippedCards.length === 2) {
 				elementsGame.elements.containerCards.classList.add('disabled');
 				if (firstCard.dataset.id === secondCard.dataset.id) {
@@ -337,10 +336,12 @@ Game.prototype.clickCard = function () {
 						firstCard.classList.remove('back');
 						secondCard.classList.remove('back');
 					}, duration);
+					// If all cards are flipped
 					if (countEven === 7) {
 						uWin.resetWin();
 					}
 				}
+				// If medals unmatched
 				else {
 					points = Math.max(0, points - 30);
 					setTimeout(() => {
@@ -348,6 +349,7 @@ Game.prototype.clickCard = function () {
 						secondCard.classList.remove('back');
 					}, duration);
 				}
+				// Disabled all cards after 1 pair flipped
 				flippedCards.length = 0;
 				setTimeout(() => {
 					elementsGame.elements.containerCards.classList.remove('disabled');
