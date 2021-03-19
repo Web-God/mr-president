@@ -326,3 +326,4 @@ export const imgPresident = [
     }
   }
 ];
+export const women = ["Agnodice", "Joséphine Baker", "Juana Inés de la Cruz", "Angela Davis", "Olympe de Gouges", "Eve Ensler", "Eugénie Feytis-Cotton", "Leymah Gbowee", "Temple Grandin", "Claudie Haigneré", "Dolores Ibarruri", "Christine Jorgensen", "Hélène Keller", "Lozen", "Louise Michel", "Nzinga", "Edith Piaf", "Pocahontas", "Caroline Rémy", "Niky de Saint-Phalle", "Valentina Terechkova", "Jeanne Villepreux-Power", "Malala Yousafzai", "Clara Zetkin"];

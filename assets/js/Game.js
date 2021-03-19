@@ -1,5 +1,6 @@
 import { medals } from './medals';
 import { imgPresident } from './presidents';
+import { women } from './presidents';
 
 export function Game(options) {
 	// this.playerName = options.playerName;
@@ -177,6 +178,7 @@ let initGame = new Game();
 Game.prototype.startGame = function (n) {
 	initGame.init();
 	displayBtn.enableBtn();
+	elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[0]);
 	elementsGame.elements.rules.classList.add('close');
 	elementsGame.elements.luckyInput.disabled = false;
 	elementsGame.elements.btnStart.classList.add('trans');
