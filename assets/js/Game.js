@@ -7,12 +7,8 @@ export function Game(options) {
 	this.cardNumber = 14;
 	this.duration = 1000;
 
-	this.hide = function (elem) {
-		elem.classList.add('hide');
-	};
-	this.show = function (elem) {
-		elem.classList.remove('hide');
-	}
+	this.hide = (elem) => elem.classList.add('hide');
+	this.show = (elem) => elem.classList.remove('hide');
 
 	this.seconds;
 	this.minutes;
