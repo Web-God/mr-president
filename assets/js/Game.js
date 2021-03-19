@@ -7,6 +7,13 @@ export function Game(options) {
 	this.cardNumber = 14;
 	this.duration = 1000;
 
+	this.hide = function (elem) {
+		elem.classList.add('hide');
+	};
+	this.show = function (elem) {
+		elem.classList.remove('hide');
+	}
+
 	this.seconds;
 	this.minutes;
 
@@ -63,7 +70,7 @@ elementsGame.registerElements();
 Game.prototype.events = function () {
 	elementsGame.elements.btnStart.addEventListener('click', this.startGame.bind(this));
 	elementsGame.elements.btnStartAgain.addEventListener('click', this.startAgain.bind(this));
-	elementsGame.elements.btnReset.addEventListener('click', this.resetGame);
+	elementsGame.elements.btnReset.addEventListener('click', this.resetGame.bind(this));
 	elementsGame.elements.luckySubmit.addEventListener('click', this.luckyGuess);
 	// Open new tab to Elysée website
 	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(president.url, '_blank'));
@@ -165,7 +172,7 @@ Game.prototype.init = function (n) {
 	displayPresidentOfCards.displayPresident();
 	clickOnCard.clickCard();
 	tipIndices.indices();
-	elementsGame.elements.title.classList.add('hide');
+	this.hide(elementsGame.elements.title);
 }
 let initGame = new Game();
 
@@ -205,14 +212,12 @@ Game.prototype.displayPresident = function () {
 let displayPresidentOfCards = new Game();
 
 
-// var hide = classList.add('hide');
-// var show = classList.remove('hide');
 // When user play again
 Game.prototype.resetBtn = function () {
-	elementsGame.elements.btnStartAgain.classList.add('hide');
-	elementsGame.elements.btnSeeMore.classList.add('hide');
-	elementsGame.elements.luckySubmit.classList.remove('hide');
-	elementsGame.elements.title.classList.add('hide');
+	this.hide(elementsGame.elements.btnStartAgain);
+	this.hide(elementsGame.elements.btnSeeMore);
+	this.hide(elementsGame.elements.title)
+	this.show(elementsGame.elements.luckySubmit)
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
 	elementsGame.elements.luckyGreets.setAttribute('hidden', '');
 	elementsGame.elements.luckyInput.value = "";
@@ -222,28 +227,27 @@ Game.prototype.resetBtn = function () {
 let removeBtn = new Game();
 
 
-
 // Reset game on click "Annuler"
 Game.prototype.resetGame = function (n) {
 	params.initParams();
 	resetClock.resetTimer();
 	elementsGame.elements.indices.innerHTML = "";
 	removeBtn.resetBtn();
-	elementsGame.elements.btnReset.classList.add('hide');
-	elementsGame.elements.lucky.classList.add('hide');
+	this.hide(elementsGame.elements.btnReset);
+	this.hide(elementsGame.elements.lucky);
+	this.show(elementsGame.elements.title);
 	elementsGame.elements.btnStart.classList.remove('trans');
 	elementsGame.elements.containerCards.innerHTML = "";
-	elementsGame.elements.title.classList.remove('hide');
 };
 
 // Reset Game when user won
 Game.prototype.resetWin = function () {
-	elementsGame.elements.title.classList.remove('hide');
+	this.show(elementsGame.elements.title);
 	elementsGame.elements.luckyGreets.removeAttribute('hidden');
 	elementsGame.elements.luckyGreets.classList.remove('close');
-	elementsGame.elements.btnStartAgain.classList.remove('hide');
-	elementsGame.elements.btnSeeMore.classList.remove('hide');
-	elementsGame.elements.luckySubmit.classList.add('hide');
+	this.show(elementsGame.elements.btnStartAgain);
+	this.show(elementsGame.elements.btnSeeMore);
+	this.hide(elementsGame.elements.luckySubmit);
 	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.disabled = true;
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
@@ -256,7 +260,7 @@ Game.prototype.resetWin = function () {
 	for (let index = 0; index < this.tipsPresident.length; index++) {
 		let tipsHtml = document.querySelector('.' + this.tipsPresident[index] + '');
 		tipsHtml.innerHTML = elementsGame.elements.tipsArray[index];
-		tipsHtml.classList.remove('hide');
+		this.show(tipsHtml);
 	}
 };
 let uWin = new Game();
@@ -279,9 +283,9 @@ Game.prototype.luckyGuess = function (e) {
 
 // Enable Buttons
 Game.prototype.enableBtn = function () {
-	elementsGame.elements.btnReset.classList.remove('hide');
-	elementsGame.elements.luckySubmit.classList.remove('hide');
-	elementsGame.elements.lucky.classList.remove('hide');
+	this.show(elementsGame.elements.btnReset);
+	this.show(elementsGame.elements.luckySubmit);
+	this.show(elementsGame.elements.lucky);
 	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.focus();
 };
@@ -364,7 +368,7 @@ let clickOnCard = new Game();
 Game.prototype.indicesMatched = function () {
 	let numRandomTips = Math.floor(Math.random() * 4);
 	const displayTips = document.querySelector('.' + this.tipsPresident[numRandomTips] + '');
-	displayTips.classList.remove('hide');
+	this.show(displayTips);
 	displayTips.innerHTML = elementsGame.elements.tipsArray[numRandomTips];
 };
 let tipsMatched = new Game();
