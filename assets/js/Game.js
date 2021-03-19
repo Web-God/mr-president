@@ -1,5 +1,5 @@
 import { medals } from './medals';
-import { imgPresident } from './president';
+import { imgPresident } from './presidents';
 
 export function Game(options) {
 	// this.playerName = options.playerName;
