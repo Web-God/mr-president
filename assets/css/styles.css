@@ -106,57 +106,6 @@ img {
   font-style: normal;
   font-display: swap;
 }
-/* Roboto Slab */
-@font-face {
-  font-family: "Roboto-Slab Bold";
-  src: url("../fonts/roboto-slab/RobotoSlab-Bold-webfont.woff") format("woff"), url("../fonts/roboto-slab/RobotoSlab-Bold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Roboto-Slab";
-  src: url("../fonts/roboto-slab/RobotoSlab-Regular-webfont.woff") format("woff"), url("../fonts/roboto-slab/RobotoSlab-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Roboto-Slab Light";
-  src: url("../fonts/roboto-slab/RobotoSlab-Light-webfont.woff") format("woff"), url("../fonts/roboto-slab/RobotoSlab-Light.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-/* Playfair Display */
-@font-face {
-  font-family: "PlayfairDisplay-Bold";
-  src: url("../fonts/playfair-display/PlayfairDisplay-Bold.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-Bold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "PlayfairDisplay-Regular";
-  src: url("../fonts/playfair-display/PlayfairDisplay-Regular.otf") format("opentype"), url("../fonts/playfair-display/PlayfairDisplay-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "PlayfairDisplaySC-Bold";
-  src: url("../fonts/playfair-display/PlayfairDisplaySC-Bold.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "PlayfairDisplaySC-Regular";
-  src: url("../fonts/playfair-display/PlayfairDisplaySC-Regular.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 html {
   font-size: 16px;
   font-family: "Roboto";
@@ -224,6 +173,19 @@ input {
   -moz-animation: fadeIn ease 2s;
   -o-animation: fadeIn ease 2s;
   -ms-animation: fadeIn ease 2s;
+}
+
+.more {
+  position: relative;
+  top: 3em;
+  width: 150px;
+  border: 1px solid #226A8A;
+  border-radius: 5px;
+  transition: color 0.5s;
+  cursor: pointer;
+}
+.more:hover {
+  color: #226A8A;
 }
 
 @keyframes fadeIn {
@@ -343,11 +305,12 @@ input {
 }
 #leftside .rewards {
   width: 235px;
+  margin-top: 3em;
   text-align: center;
   color: #FAFAFA;
 }
 
-.btn, .more, .btn-submit, .content-btn .reset, .content-btn .start {
+.btn, .btn-submit, .content-btn .reset, .content-btn .start, .more {
   display: flex;
   justify-content: center;
   display: flex;
@@ -477,11 +440,14 @@ input {
   pointer-events: none;
 }
 
-.close,
-.hide {
+.close {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 1s, opacity 1s linear;
+}
+
+.hide {
+  display: none;
 }
 
 .btn-close-rules,
@@ -516,17 +482,6 @@ input {
 
 .disabled {
   pointer-events: none;
-}
-
-.more {
-  width: 150px;
-  border: 1px solid #226A8A;
-  border-radius: 5px;
-  transition: color 0.5s;
-  cursor: pointer;
-}
-.more:hover {
-  color: #226A8A;
 }
 
 .show {

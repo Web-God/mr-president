@@ -18,12 +18,14 @@
   opacity: 0.5;
   pointer-events: none;
 }
-.close,
-.hide {
+.close {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 1s,
   opacity 1s linear;
+}
+.hide {
+  display: none;
 }
   .btn-close-rules,
   .btn-close-greets {
@@ -57,19 +59,6 @@
   }
 .disabled {
   pointer-events: none;
-}
-
-.more {
-  @extend .btn;
-  width: 150px;
-  border: 1px solid $colorBlue;
-  border-radius: 5px;
-  transition: color .5s;
-  cursor: pointer;
-
-  &:hover {
-    color: $colorBlue;
-  }
 }
 
 .show {

@@ -60,6 +60,21 @@ input {
   -ms-animation: fadeIn ease 2s;
 }
 
+.more {
+  @extend .btn;
+  position: relative;
+  top: 3em;
+  width: 150px;
+  border: 1px solid $colorBlue;
+  border-radius: 5px;
+  transition: color .5s;
+  cursor: pointer;
+
+  &:hover {
+    color: $colorBlue;
+  }
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

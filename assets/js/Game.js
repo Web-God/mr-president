@@ -165,6 +165,7 @@ Game.prototype.init = function (n) {
 	displayPresidentOfCards.displayPresident();
 	clickOnCard.clickCard();
 	tipIndices.indices();
+	elementsGame.elements.title.classList.add('hide');
 }
 let initGame = new Game();
 
@@ -232,6 +233,7 @@ Game.prototype.resetGame = function (n) {
 	elementsGame.elements.lucky.classList.add('hide');
 	elementsGame.elements.btnStart.classList.remove('trans');
 	elementsGame.elements.containerCards.innerHTML = "";
+	elementsGame.elements.title.classList.remove('hide');
 };
 
 // Reset Game when user won
