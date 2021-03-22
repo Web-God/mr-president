@@ -126,6 +126,7 @@
   #error {
     text-align: center;
     color: $colorFade;
+    transform: scale(1.2);
   }
 
   img {
@@ -140,8 +141,10 @@
   border: 2px solid $colorRed;
   border-radius: 5px;
   margin: 0.8em auto;
+  transition: all ease-out .5s;
 
   &:hover {
-    color: $colorBlue;
+    color: $white;
+    background-color: $colorBlue;
   }
 }

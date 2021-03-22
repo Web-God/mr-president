@@ -22,6 +22,15 @@ export function Game(options) {
 	this.shuffledCards = shuffle(medals);
 	this.shufflePresident = shuffle(imgPresident);
 	this.tipsPresident = Object.keys(this.shufflePresident[0].indice);
+
+	this.emptyInput = (e, w) => {
+		w = Math.floor(Math.random() * 24);
+		if (e.target && elementsGame.elements.luckyInput.value !== "") {
+			elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
+			elementsGame.elements.luckyInput.value = "";
+			elementsGame.elements.luckyError.setAttribute('hidden', '');
+		}
+	}
 };
 
 
@@ -63,12 +72,12 @@ Game.prototype.registerElements = function () {
 let elementsGame = new Game();
 elementsGame.registerElements();
 
-
 Game.prototype.events = function () {
 	elementsGame.elements.btnStart.addEventListener('click', this.startGame.bind(this));
 	elementsGame.elements.btnStartAgain.addEventListener('click', this.startAgain.bind(this));
 	elementsGame.elements.btnReset.addEventListener('click', this.resetGame.bind(this));
 	elementsGame.elements.luckySubmit.addEventListener('click', this.luckyGuess);
+	elementsGame.elements.luckyInput.addEventListener('click', this.emptyInput.bind(this));
 	// Open new tab to Elysée website
 	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(president.url, '_blank'));
 }
@@ -88,7 +97,7 @@ Game.prototype.timerGame = function () {
 			this.minutes += 1;
 			this.seconds = 0;
 		}
-		elementsGame.elements.clock.innerHTML = this.minutes + "m " + this.seconds + 's';
+		elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';;
 		myScore.scoreTotal();
 	}, this.duration);
 }
@@ -101,7 +110,7 @@ Game.prototype.resetTimer = function () {
 	this.minutes = 0;
 	clearInterval(clockId);
 	elementsGame.elements.scoreDisplay.innerHTML = "1000 points";
-	elementsGame.elements.clock.innerHTML = this.minutes + "m " + this.seconds + 's';
+	elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';;
 }
 let resetClock = new Game();
 
@@ -113,7 +122,7 @@ Game.prototype.scoreTotal = function () {
 		uWin.resetWin();
 		elementsGame.elements.containerCards.innerHTML = "";
 		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
-		elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu !<div> " + fullName + "</div> est l'élu";
+		elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu !<div> " + fullName + "</div> est élu";
 	}
 	elementsGame.elements.scoreDisplay.innerHTML = this.total;
 }
@@ -175,10 +184,11 @@ let initGame = new Game();
 
 
 // Start Game
-Game.prototype.startGame = function (n) {
+Game.prototype.startGame = function (n, w) {
+	w = Math.floor(Math.random() * 24);
 	initGame.init();
 	displayBtn.enableBtn();
-	elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[0]);
+	elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
 	elementsGame.elements.rules.classList.add('close');
 	elementsGame.elements.luckyInput.disabled = false;
 	elementsGame.elements.btnStart.classList.add('trans');
@@ -236,6 +246,7 @@ Game.prototype.resetGame = function (n) {
 	this.show(elementsGame.elements.title);
 	elementsGame.elements.btnStart.classList.remove('trans');
 	elementsGame.elements.containerCards.innerHTML = "";
+	elementsGame.elements.rewards.innerHTML = "";
 };
 
 // Reset Game when user won
@@ -277,6 +288,9 @@ Game.prototype.luckyGuess = function (e) {
 		points = points - 150;
 	}
 }
+
+
+
 
 
 // Enable Buttons

@@ -181,13 +181,23 @@ input {
   width: 150px;
   border: 1px solid #226A8A;
   border-radius: 5px;
-  transition: color 0.5s;
+  transition: all 0.5s;
   cursor: pointer;
 }
 .more:hover {
-  color: #226A8A;
+  color: #FFFFFF;
+  background-color: #226A8A;
 }
 
+@keyframes sweep {
+  0% {
+    left: 0;
+    width: 0;
+  }
+  100% {
+    width: 150px;
+  }
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -404,6 +414,7 @@ input {
 .leftside_btn-tips #error {
   text-align: center;
   color: #FAFAFA;
+  transform: scale(1.2);
 }
 .leftside_btn-tips img {
   width: 100%;
@@ -414,9 +425,11 @@ input {
   border: 2px solid #8A1C2C;
   border-radius: 5px;
   margin: 0.8em auto;
+  transition: all ease-out 0.5s;
 }
 .btn-submit:hover {
-  color: #226A8A;
+  color: #FFFFFF;
+  background-color: #226A8A;
 }
 
 .rules {
@@ -606,9 +619,6 @@ input {
   width: 25px;
   height: 20px;
 }
-.leftside_btn-start span img:hover {
-  animation: translateLeft ease-in-out 0.5s;
-}
 .leftside_btn-start span:nth-child(1) {
   background-color: #dee2e6;
   padding: 5px 25px;
@@ -620,9 +630,6 @@ input {
   -o-border-radius: 5px 0 0 5px;
   cursor: pointer;
 }
-.leftside_btn-start span:nth-child(1):hover {
-  color: #226A8A;
-}
 .leftside_btn-start span:nth-child(2) {
   background-color: #dee2e6;
   padding: 5px 10px;
@@ -633,15 +640,18 @@ input {
   -o-border-radius: 0 5px 5px 0;
   cursor: pointer;
 }
+.leftside_btn-start:hover span img {
+  animation: translateLeft ease-in-out 0.5s;
+}
+.leftside_btn-start:hover {
+  color: #226A8A;
+}
 .leftside_btn-reset span img {
   position: relative;
   top: 8px;
   width: 25px;
   height: 25px;
   transition: transform 0.5s;
-}
-.leftside_btn-reset span img:hover {
-  transform: rotate(90deg);
 }
 .leftside_btn-reset span:nth-child(1) {
   background-color: #dee2e6;
@@ -654,9 +664,6 @@ input {
   -o-border-radius: 5px 0 0 5px;
   cursor: pointer;
 }
-.leftside_btn-reset span:nth-child(1):hover {
-  color: #226A8A;
-}
 .leftside_btn-reset span:nth-child(2) {
   background-color: #dee2e6;
   width: 45px;
@@ -667,6 +674,12 @@ input {
   -ms-border-radius: 0 5px 5px 0;
   -o-border-radius: 0 5px 5px 0;
   cursor: pointer;
+}
+.leftside_btn-reset:hover span img {
+  transform: rotate(90deg);
+}
+.leftside_btn-reset:hover {
+  color: #226A8A;
 }
 
 /*# sourceMappingURL=styles.css.map */

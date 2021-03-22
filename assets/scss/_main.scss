@@ -67,14 +67,33 @@ input {
   width: 150px;
   border: 1px solid $colorBlue;
   border-radius: 5px;
-  transition: color .5s;
+  transition: all .5s;
   cursor: pointer;
 
   &:hover {
-    color: $colorBlue;
+    color: $white;
+    background-color: $colorBlue;
+  }
+  // &:hover~.moreover {
+  //   border-radius: 5px;
+  //   height: 28px;
+  //   position: relative;
+  //   top: 12px;
+  //   width: 150px;
+  //   z-index: 2;
+  //   animation: sweep 3s ease-out;
+  //   background-color: $colorBlue;
+  // }
+}
+@keyframes sweep {
+  0% {
+    left: 0;
+    width: 0;
+  }
+  100% {
+    width: 150px;
   }
 }
-
 @keyframes fadeIn {
   0% {
     opacity: 0;
