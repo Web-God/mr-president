@@ -342,7 +342,6 @@ Game.prototype.luckyGuess = function (e) {
 }
 
 Game.prototype.scoreTotal = function () {
-	this.pts = 555;
 	points = Math.max(0, points - 1);
 	this.total = points + " points";
 	if (points === 0) {
