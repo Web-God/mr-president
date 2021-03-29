@@ -30,7 +30,7 @@ export function Game(options) {
 			elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
 			elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu !<div> " + randomPhotos.fullName + "</div> est élu";
 	}
-};
+}
 
 Game.prototype.registerElements = function () {
 	elementsGame.elements = {
@@ -66,7 +66,7 @@ Game.prototype.registerElements = function () {
 		card: document.getElementsByClassName('card'),
 		cardImage: document.getElementsByClassName('card_img')
 	}
-};
+}
 let elementsGame = new Game();
 elementsGame.registerElements();
 
@@ -98,7 +98,7 @@ Game.prototype.timerGame = function () {
 		}
 		this.scoreTotal();
 	}, this.duration);
-};
+}
 
 Game.prototype.resetTimer = function () {
 	points = 1000;
@@ -161,7 +161,7 @@ Game.prototype.startGame = function (n, w) {
 	elementsGame.elements.rules.classList.add('close');
 	elementsGame.elements.luckyInput.disabled = false;
 	elementsGame.elements.btnStart.classList.add('trans');
-};
+}
 
 /**
  * @param {number} n
@@ -175,7 +175,7 @@ Game.prototype.startAgain = function (n) {
 	this.resetBtn();
 	this.init();
 	shuffle(medals);
-};
+}
 
 // Display deck cards
 Game.prototype.displayCards = function () {
@@ -183,7 +183,7 @@ Game.prototype.displayCards = function () {
 		let cardHtml = '<div class="card"><img src="' + this.shuffledCards[i].url + '" data-id="' + this.shuffledCards[i].id + '" alt="' + this.shuffledCards[i].title + '" class="card_img"></div>';
 		elementsGame.elements.containerCards.innerHTML += cardHtml;
 	}
-};
+}
 
 // When user play again
 Game.prototype.resetBtn = function () {
@@ -197,7 +197,7 @@ Game.prototype.resetBtn = function () {
 	elementsGame.elements.luckyInput.focus();
 	elementsGame.elements.containerCards.innerHTML = "";
 	shuffle(medals);
-};
+}
 
 // Reset game on click "Annuler"
 Game.prototype.resetGame = function (n) {
@@ -211,7 +211,7 @@ Game.prototype.resetGame = function (n) {
 	elementsGame.elements.btnStart.classList.remove('trans');
 	elementsGame.elements.containerCards.innerHTML = "";
 	elementsGame.elements.rewards.innerHTML = "";
-};
+}
 
 // Enable Buttons
 Game.prototype.enableBtn = function () {
@@ -324,7 +324,7 @@ Game.prototype.resetWin = function () {
 		tipsHtml.innerHTML = elementsGame.elements.tipsArray[index];
 		this.show(tipsHtml);
 	}
-};
+}
 
 // Check if input equal president's name
 Game.prototype.luckyGuess = function (e) {
