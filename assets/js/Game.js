@@ -120,8 +120,7 @@ Game.prototype.shufflePhotos = function (n) {
 	const stylesPres = {
 		backgroundImage: "url(" + this.president.src + ")",
 		backgroundSize: "cover",
-		backgroundRepeat: "no-repeat",
-		backgroundColor: "rgba(255, 255, 255, 1)"
+		backgroundRepeat: "no-repeat"
 	}
 	Object.assign(elementsGame.elements.fotoPresident.style, stylesPres);
 	// Display title
