@@ -5,8 +5,10 @@ import { women } from './presidents';
 export function Game(options) {
 	// this.playerName = options.playerName;
 	// Init Var
+	this.lastTip = [];
 	this.cardNumber = 14;
 	this.duration = 1000;
+	this.t = 0;
 
 	this.hide = elem => elem.classList.add('hide');
 	this.show = elem => elem.classList.remove('hide');
@@ -15,9 +17,10 @@ export function Game(options) {
 	this.shuffledCards = shuffle(medals);
 	this.shufflePresident = shuffle(imgPresident);
 	this.tipsPresident = Object.keys(this.shufflePresident[0].indice);
+	this.tipsLen = this.tipsPresident.length;
 
 	this.emptyInput = (e, w) => {
-		w = Math.floor(Math.random() * 24);
+		w = Math.floor(Math.random() * women.length);
 		if (e.target && elementsGame.elements.luckyInput.value !== "") {
 			elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
 			elementsGame.elements.luckyInput.value = "";
@@ -38,6 +41,7 @@ Game.prototype.registerElements = function () {
 		btnStart: document.querySelector('.start'),
 		btnStartAgain: document.getElementById('start-again'),
 		btnReset: document.querySelector('.reset'),
+		btnSeeTip: document.getElementById('seetip'),
 		scoreDisplay: document.querySelector('.score'),
 		clock: document.querySelector('.timer'),
 		btnCloseRules: document.querySelector('.btn-close-rules'),
@@ -76,6 +80,7 @@ Game.prototype.events = function () {
 	elementsGame.elements.btnReset.addEventListener('click', this.resetGame.bind(this));
 	elementsGame.elements.luckySubmit.addEventListener('click', this.luckyGuess.bind(randomPhotos));
 	elementsGame.elements.luckyInput.addEventListener('click', this.emptyInput.bind(this));
+	elementsGame.elements.btnSeeTip.addEventListener('click', this.indicesMatched.bind(this));
 	// Open new tab to Elysée website
 	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(randomPhotos.locationUrl, '_blank'));
 }
@@ -83,17 +88,19 @@ Game.prototype.events = function () {
 let points = 1000,
 	clockId;
 Game.prototype.timerGame = function () {
-	this.chrono = new Date(1980, 6, 31);
-	this.seconds = this.chrono.getSeconds();
-	this.minutes = this.chrono.getMinutes();
+	this.startChrono = new Date(1980, 6, 31, 1, 1, 60).getTime();
+	this.endChrono = new Date(1980, 6, 31, 1).getTime();
+
+	let elapsedTime = this.startChrono - this.endChrono;
+
 	clockId = setInterval(() => {
-		this.seconds += 1;
-		if (this.seconds > 59) {
-			this.minutes += 1;
-			this.seconds = 0;
-		}
+		elapsedTime -= 1000;
+		this.minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+
 		elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';
-		if(this.minutes >= 2){
+		if(elapsedTime === 0){
+			clearInterval(clockId);
 			this.lostGame();
 		}
 		this.scoreTotal();
@@ -102,8 +109,8 @@ Game.prototype.timerGame = function () {
 
 Game.prototype.resetTimer = function () {
 	points = 1000;
+	this.minutes = 2;
 	this.seconds = 0;
-	this.minutes = 0;
 	clearInterval(clockId);
 	elementsGame.elements.scoreDisplay.innerHTML = points + " points";
 	elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';
@@ -138,6 +145,7 @@ randomPhotos.shufflePhotos(0);
  * @param {number} n
  */
 Game.prototype.initParams = function (n) {
+	this.t = 0;
 	points = 1000;
 	n = Math.floor(Math.random() * 25);
 	randomPhotos.shufflePhotos(n);
@@ -150,6 +158,8 @@ Game.prototype.init = function (n) {
 	this.clickCard();
 	this.indices();
 	this.hide(elementsGame.elements.title);
+	this.show(elementsGame.elements.btnSeeTip);
+	elementsGame.elements.btnSeeTip.classList.remove('trans');
 }
 
 // Start Game on click "Commencer"
@@ -191,6 +201,7 @@ Game.prototype.resetBtn = function () {
 	this.hide(elementsGame.elements.btnSeeMore);
 	this.hide(elementsGame.elements.title)
 	this.show(elementsGame.elements.luckySubmit)
+	this.show(elementsGame.elements.btnSeeTip);
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
 	elementsGame.elements.luckyGreets.setAttribute('hidden', '');
 	elementsGame.elements.luckyInput.value = "";
@@ -206,6 +217,7 @@ Game.prototype.resetGame = function (n) {
 	elementsGame.elements.indices.innerHTML = "";
 	this.resetBtn();
 	this.hide(elementsGame.elements.btnReset);
+	this.hide(elementsGame.elements.btnSeeTip);
 	this.hide(elementsGame.elements.lucky);
 	this.show(elementsGame.elements.title);
 	elementsGame.elements.btnStart.classList.remove('trans');
@@ -218,17 +230,32 @@ Game.prototype.enableBtn = function () {
 	this.show(elementsGame.elements.btnReset);
 	this.show(elementsGame.elements.luckySubmit);
 	this.show(elementsGame.elements.lucky);
+	this.show(elementsGame.elements.btnSeeTip);
 	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.focus();
 };
 
 // Display Indices
 Game.prototype.indices = function () {
-	for (let index = 0; index < this.tipsPresident.length; index++) {
+	for (let index = 0; index < this.tipsLen; index++) {
 		let tipsHtml = '<div class="' + this.tipsPresident[index] + ' indice hide"></div>';
 		indices.innerHTML += tipsHtml;
 	}
 }
+
+Game.prototype.indicesMatched = function () {
+	if (this.t <= this.tipsLen -1) {
+		const tipsCopy = Array.from(this.tipsPresident);
+		const displayTips = document.querySelector('.' + tipsCopy[this.t] + '');
+		this.show(displayTips);
+		displayTips.innerHTML = elementsGame.elements.tipsArray[this.t];
+	}
+	++this.t;
+	points = Math.min(1000, points - 50);
+	if(this.tipsLen === this.t){
+		elementsGame.elements.btnSeeTip.classList.add('trans');
+	}
+};
 
 // Manage displaying Cards
 Game.prototype.clickCard = function () {
@@ -255,7 +282,6 @@ Game.prototype.clickCard = function () {
 			// If medals matched
 			if (flippedCards.length === 2) {
 				if (firstCard.dataset.id === secondCard.dataset.id) {
-					this.indicesMatched();
 					this.countEven++;
 					points = Math.min(1000, points + 20);
 					setTimeout(() => {
@@ -288,13 +314,6 @@ Game.prototype.clickCard = function () {
 	// Link randomPhotos to retrieve this.fullName from shufflePhotos
 }.bind(randomPhotos);
 
-Game.prototype.indicesMatched = function () {
-	let numRandomTips = Math.floor(Math.random() * 4);
-	const displayTips = document.querySelector('.' + this.tipsPresident[numRandomTips] + '');
-	this.show(displayTips);
-	displayTips.innerHTML = elementsGame.elements.tipsArray[numRandomTips];
-};
-
 Game.prototype.stopEvent = function () {
 	elementsGame.elements.containerCards.classList.add('disabled');
 	setTimeout(() => {
@@ -310,6 +329,7 @@ Game.prototype.resetWin = function () {
 	this.show(elementsGame.elements.btnStartAgain);
 	this.show(elementsGame.elements.btnSeeMore);
 	this.hide(elementsGame.elements.luckySubmit);
+	this.hide(elementsGame.elements.btnSeeTip);
 	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.disabled = true;
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
@@ -319,7 +339,7 @@ Game.prototype.resetWin = function () {
 	clearInterval(clockId);
 	shuffle(medals);
 	// Display HTML for Indices
-	for (let index = 0; index < this.tipsPresident.length; index++) {
+	for (let index = 0; index < this.tipsLen; index++) {
 		let tipsHtml = document.querySelector('.' + this.tipsPresident[index] + '');
 		tipsHtml.innerHTML = elementsGame.elements.tipsArray[index];
 		this.show(tipsHtml);
