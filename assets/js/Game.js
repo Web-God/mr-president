@@ -1,6 +1,5 @@
 import { medals } from './medals';
-import { imgPresident } from './presidents';
-import { women } from './presidents';
+import { imgPresident, women } from './presidents';
 
 export function Game(options) {
 	// this.playerName = options.playerName;
@@ -35,7 +34,11 @@ export function Game(options) {
 
 	this.setScoreMinus = p => points = Math.max(0, points - p);
 	this.setScorePlus = p => points = Math.min(1000, points + p);
+
+	this.displayChrono = () => elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';
 }
+
+let points = 1000, clockId;
 
 Game.prototype.registerElements = function () {
 	elementsGame.elements = {
@@ -89,8 +92,6 @@ Game.prototype.events = function () {
 	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(randomPhotos.locationUrl, '_blank'));
 }
 
-let points = 1000,
-	clockId;
 Game.prototype.timerGame = function () {
 	this.startChrono = new Date(1980, 6, 31, 1, 1, 60).getTime();
 	this.endChrono = new Date(1980, 6, 31, 1).getTime();
@@ -99,14 +100,17 @@ Game.prototype.timerGame = function () {
 
 	clockId = setInterval(() => {
 		elapsedTime -= 1000;
+
 		this.minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
 		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
-		elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';
+		this.displayChrono();
+
 		if (elapsedTime === 0) {
 			clearInterval(clockId);
 			this.lostGame();
 		}
+
 		this.scoreTotal();
 	}, this.duration);
 }
@@ -117,7 +121,7 @@ Game.prototype.resetTimer = function () {
 	this.seconds = 0;
 	clearInterval(clockId);
 	elementsGame.elements.scoreDisplay.innerHTML = points + " points";
-	elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';
+	this.displayChrono();
 }
 
 /**
