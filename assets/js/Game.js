@@ -29,13 +29,13 @@ export function Game(options) {
 		this.resetWin();
 		elementsGame.elements.containerCards.innerHTML = "";
 		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
-		elementsGame.elements.nbrClick.innerHTML = "<span class='greet-name'>" + elementsGame.elements.pseudoInput.value + "</span> vous avez perdu !<div> " + randomPhotos.fullName + "</div> est élu";
+		elementsGame.elements.nbrClick.innerHTML = `<span class='greet-name'> ${elementsGame.elements.pseudoInput.value} </span> vous avez perdu !<div> ${randomPhotos.fullName} </div> est élu.`;
 	}
 
 	this.setScoreMinus = p => points = Math.max(0, points - p);
 	this.setScorePlus = p => points = Math.min(1000, points + p);
 
-	this.displayChrono = () => elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';
+	this.displayChrono = () => elementsGame.elements.clock.innerHTML = `${this.minutes}m ${this.seconds}s`;
 }
 
 let points = 1000, clockId;
@@ -120,7 +120,7 @@ Game.prototype.resetTimer = function () {
 	this.minutes = 2;
 	this.seconds = 0;
 	clearInterval(clockId);
-	elementsGame.elements.scoreDisplay.innerHTML = points + " points";
+	elementsGame.elements.scoreDisplay.innerHTML = `${points} points`;
 	this.displayChrono();
 }
 
@@ -133,7 +133,7 @@ Game.prototype.shufflePhotos = function (n) {
 	this.fullName = this.president.name.toLowerCase();
 	this.lastName = this.president.lastName.toLowerCase();
 	const stylesPres = {
-		backgroundImage: "url(" + this.president.src + ")",
+		backgroundImage: `url(${this.president.src})`,
 		backgroundSize: "cover",
 		backgroundRepeat: "no-repeat"
 	}
@@ -201,7 +201,7 @@ Game.prototype.startAgain = function (n) {
 // Display deck cards
 Game.prototype.displayCards = function () {
 	for (let i = 0; i < this.cardNumber; i++) {
-		let cardHtml = '<div class="card"><img src="' + this.shuffledCards[i].url + '" data-id="' + this.shuffledCards[i].id + '" alt="' + this.shuffledCards[i].title + '" class="card_img"></div>';
+		let cardHtml = `<div class="card"><img src="${this.shuffledCards[i].url}" data-id="${this.shuffledCards[i].id}" alt="${this.shuffledCards[i].title}" class="card_img"></div>`;
 		elementsGame.elements.containerCards.innerHTML += cardHtml;
 	}
 }
@@ -250,7 +250,7 @@ Game.prototype.enableBtn = function () {
 // Display Indices
 Game.prototype.indices = function () {
 	for (let index = 0; index < this.tipsLen; index++) {
-		let tipsHtml = '<div class="' + this.tipsPresident[index] + ' indice hide"></div>';
+		let tipsHtml = `<div class="${this.tipsPresident[index]} indice hide"></div>`;
 		indices.innerHTML += tipsHtml;
 	}
 }
@@ -258,7 +258,7 @@ Game.prototype.indices = function () {
 Game.prototype.indicesMatched = function () {
 	if (this.t <= this.tipsLen - 1) {
 		const tipsCopy = Array.from(this.tipsPresident);
-		const displayTips = document.querySelector('.' + tipsCopy[this.t] + '');
+		const displayTips = document.querySelector(`.${tipsCopy[this.t]}`);
 		this.show(displayTips);
 		displayTips.innerHTML = elementsGame.elements.tipsArray[this.t];
 	}
@@ -345,14 +345,14 @@ Game.prototype.resetWin = function () {
 	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.disabled = true;
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
-	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations " + elementsGame.elements.pseudoInput.value;
-	elementsGame.elements.nbrClick.innerHTML = "Vous avez élu<div> " + this.fullName + "</div> avec " + this.numberOfClick + " clicks";
+	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = `Félicitations ${elementsGame.elements.pseudoInput.value}`;
+	elementsGame.elements.nbrClick.innerHTML = `Vous avez élu<div> ${this.fullName} </div> avec ${this.numberOfClick} clicks`;
 	elementsGame.elements.rewards.innerHTML = "";
 	clearInterval(clockId);
 	shuffle(medals);
 	// Display HTML for Indices
 	for (let index = 0; index < this.tipsLen; index++) {
-		let tipsHtml = document.querySelector('.' + this.tipsPresident[index] + '');
+		let tipsHtml = document.querySelector(`.${this.tipsPresident[index]}`);
 		tipsHtml.innerHTML = elementsGame.elements.tipsArray[index];
 		this.show(tipsHtml);
 	}
@@ -375,7 +375,7 @@ Game.prototype.luckyGuess = function (e) {
 
 Game.prototype.scoreTotal = function () {
 	this.setScoreMinus(1)
-	this.total = points + " points";
+	this.total = `${points} points`;
 	if (points === 0) {
 		this.lostGame();
 	}
