@@ -7,7 +7,6 @@ export function Game(options) {
 	this.cardNumber = 14;
 	this.duration = 1000;
 	this.t = 0;
-
 	this.hide = elem => elem.classList.add('hide');
 	this.show = elem => elem.classList.remove('hide');
 
@@ -87,7 +86,7 @@ Game.prototype.events = function () {
 	elementsGame.elements.btnReset.addEventListener('click', this.resetGame.bind(this));
 	elementsGame.elements.luckySubmit.addEventListener('click', this.luckyGuess.bind(randomPhotos));
 	elementsGame.elements.luckyInput.addEventListener('click', this.emptyInput.bind(this));
-	elementsGame.elements.btnSeeTip.addEventListener('click', this.indicesMatched.bind(this));
+	elementsGame.elements.btnSeeTip.addEventListener('click', this.indicesReveal.bind(this));
 	// Open new tab to Elysée website
 	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(randomPhotos.locationUrl, '_blank'));
 }
@@ -168,6 +167,7 @@ Game.prototype.init = function (n) {
 	this.displayCards();
 	this.clickCard();
 	this.indices();
+	this.indicesArray = Array.from(this.tipsPresident);
 	this.hide(elementsGame.elements.title);
 	this.show(elementsGame.elements.btnSeeTip);
 	elementsGame.elements.btnSeeTip.classList.remove('trans');
@@ -182,6 +182,7 @@ Game.prototype.startGame = function (n, w) {
 	elementsGame.elements.rules.classList.add('close');
 	elementsGame.elements.luckyInput.disabled = false;
 	elementsGame.elements.btnStart.classList.add('trans');
+	console.log("this.indicesArray Start: ", this.indicesArray);
 }
 
 /**
@@ -196,6 +197,7 @@ Game.prototype.startAgain = function (n) {
 	this.resetBtn();
 	this.init();
 	shuffle(medals);
+	console.log("this.indicesArray Start Again: ", this.indicesArray);
 }
 
 // Display deck cards
@@ -255,18 +257,15 @@ Game.prototype.indices = function () {
 	}
 }
 
-Game.prototype.indicesMatched = function () {
-	if (this.t <= this.tipsLen - 1) {
-		const tipsCopy = Array.from(this.tipsPresident);
-		const displayTips = document.querySelector(`.${tipsCopy[this.t]}`);
-		this.show(displayTips);
-		displayTips.innerHTML = elementsGame.elements.tipsArray[this.t];
-	}
-	++this.t;
-	this.setScoreMinus(50);
-	if (this.tipsLen === this.t) {
-		elementsGame.elements.btnSeeTip.classList.add('trans');
-	}
+
+Game.prototype.indicesReveal = function () {
+	const displayTips = document.querySelector(`.${this.indicesArray[0]}`);
+	this.show(displayTips);
+	displayTips.innerHTML = elementsGame.elements.tipsArray[this.t];
+	this.indicesArray.splice(0, 1);
+	this.t++;
+	this.indicesArray.length === 0 ? elementsGame.elements.btnSeeTip.classList.add('trans') : null;
+	this.setScoreMinus(100);
 }
 
 // Manage displaying Cards
@@ -312,7 +311,7 @@ Game.prototype.clickCard = function () {
 				}
 				// If medals unmatched
 				else {
-					this.setScoreMinus(30);
+					this.setScoreMinus(50);
 					setTimeout(() => {
 						firstCard.classList.remove('back');
 						secondCard.classList.remove('back');
@@ -369,7 +368,7 @@ Game.prototype.luckyGuess = function (e) {
 	}
 	else {
 		elementsGame.elements.luckyError.removeAttribute('hidden');
-		this.setScoreMinus(150);
+		this.setScoreMinus(200);
 	}
 }
 
