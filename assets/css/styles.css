@@ -300,6 +300,17 @@ input {
 #leftside .logo {
   width: 220px;
 }
+#leftside .wrap-input {
+  margin: 20px auto;
+}
+#leftside .wrap-input .left_input {
+  margin-top: 7px;
+  color: #000000;
+  text-transform: capitalize;
+}
+#leftside .wrap-input label[for=pseudo] {
+  color: #FAFAFA;
+}
 #leftside .clock {
   width: 200px;
   padding: 10px;
@@ -318,6 +329,9 @@ input {
   margin-top: 3em;
   text-align: center;
   color: #FAFAFA;
+}
+#leftside .btn-tip {
+  margin-top: 3em;
 }
 
 .btn, .btn-submit, .content-btn .reset, .content-btn .start, .more {
@@ -410,6 +424,9 @@ input {
 .leftside_btn-tips #greets .nclick div {
   text-transform: capitalize;
   color: #226A8A;
+}
+.leftside_btn-tips #greets .greet-name {
+  text-transform: capitalize;
 }
 .leftside_btn-tips #error {
   text-align: center;

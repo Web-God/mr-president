@@ -2,7 +2,17 @@
   .logo {
     width: 220px;
   }
-
+  .wrap-input{
+    margin: 20px auto;
+    .left_input {
+      margin-top: 7px;
+      color: $black;
+      text-transform: capitalize;
+    }
+    label[for=pseudo]{
+      color: $colorFade;
+    }
+  }
   .clock {
     @extend .input;
     width: 200px;
@@ -23,6 +33,9 @@
     margin-top: 3em;
     text-align: center;
     color: $colorFade;
+  }
+  .btn-tip {
+    margin-top: 3em;
   }
 }
 
@@ -120,6 +133,9 @@
     .nclick div {
       text-transform: capitalize;
       color: $colorBlue;
+    }
+    .greet-name {
+      text-transform: capitalize;
     }
   }
 
