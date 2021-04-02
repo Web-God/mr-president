@@ -5,7 +5,6 @@ import { women } from './presidents';
 export function Game(options) {
 	// this.playerName = options.playerName;
 	// Init Var
-	this.lastTip = [];
 	this.cardNumber = 14;
 	this.duration = 1000;
 	this.t = 0;
@@ -28,15 +27,20 @@ export function Game(options) {
 		}
 	}
 	this.lostGame = () => {
-			this.resetWin();
-			elementsGame.elements.containerCards.innerHTML = "";
-			elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
-			elementsGame.elements.nbrClick.innerHTML = "Vous avez perdu !<div> " + randomPhotos.fullName + "</div> est élu";
+		this.resetWin();
+		elementsGame.elements.containerCards.innerHTML = "";
+		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
+		elementsGame.elements.nbrClick.innerHTML = "<span class='greet-name'>" + elementsGame.elements.pseudoInput.value + "</span> vous avez perdu !<div> " + randomPhotos.fullName + "</div> est élu";
 	}
+
+	this.setScoreMinus = p => points = Math.max(0, points - p);
+	this.setScorePlus = p => points = Math.min(1000, points + p);
 }
 
 Game.prototype.registerElements = function () {
 	elementsGame.elements = {
+		// Pseudo
+		pseudoInput: document.getElementById('pseudo'),
 		// Declare variables buttons
 		btnStart: document.querySelector('.start'),
 		btnStartAgain: document.getElementById('start-again'),
@@ -99,7 +103,7 @@ Game.prototype.timerGame = function () {
 		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
 		elementsGame.elements.clock.innerHTML = this.minutes + 'm ' + this.seconds + 's';
-		if(elapsedTime === 0){
+		if (elapsedTime === 0) {
 			clearInterval(clockId);
 			this.lostGame();
 		}
@@ -147,11 +151,14 @@ randomPhotos.shufflePhotos(0);
 Game.prototype.initParams = function (n) {
 	this.t = 0;
 	points = 1000;
-	n = Math.floor(Math.random() * 25);
+	n = Math.floor(Math.random() * imgPresident.length);
 	randomPhotos.shufflePhotos(n);
 }
 
 Game.prototype.init = function (n) {
+	this.pseudo = elementsGame.elements.pseudoInput;
+	this.pseudo.disabled = true;
+	this.pseudoValue = this.pseudo.value;
 	this.initParams();
 	this.timerGame();
 	this.displayCards();
@@ -164,7 +171,7 @@ Game.prototype.init = function (n) {
 
 // Start Game on click "Commencer"
 Game.prototype.startGame = function (n, w) {
-	w = Math.floor(Math.random() * 24);
+	w = Math.floor(Math.random() * women.length);
 	this.init();
 	this.enableBtn();
 	elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
@@ -223,6 +230,7 @@ Game.prototype.resetGame = function (n) {
 	elementsGame.elements.btnStart.classList.remove('trans');
 	elementsGame.elements.containerCards.innerHTML = "";
 	elementsGame.elements.rewards.innerHTML = "";
+	this.pseudo.disabled = false;
 }
 
 // Enable Buttons
@@ -233,7 +241,7 @@ Game.prototype.enableBtn = function () {
 	this.show(elementsGame.elements.btnSeeTip);
 	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.focus();
-};
+}
 
 // Display Indices
 Game.prototype.indices = function () {
@@ -244,18 +252,18 @@ Game.prototype.indices = function () {
 }
 
 Game.prototype.indicesMatched = function () {
-	if (this.t <= this.tipsLen -1) {
+	if (this.t <= this.tipsLen - 1) {
 		const tipsCopy = Array.from(this.tipsPresident);
 		const displayTips = document.querySelector('.' + tipsCopy[this.t] + '');
 		this.show(displayTips);
 		displayTips.innerHTML = elementsGame.elements.tipsArray[this.t];
 	}
 	++this.t;
-	points = Math.min(1000, points - 50);
-	if(this.tipsLen === this.t){
+	this.setScoreMinus(50);
+	if (this.tipsLen === this.t) {
 		elementsGame.elements.btnSeeTip.classList.add('trans');
 	}
-};
+}
 
 // Manage displaying Cards
 Game.prototype.clickCard = function () {
@@ -283,7 +291,7 @@ Game.prototype.clickCard = function () {
 			if (flippedCards.length === 2) {
 				if (firstCard.dataset.id === secondCard.dataset.id) {
 					this.countEven++;
-					points = Math.min(1000, points + 20);
+					this.setScorePlus(20);
 					setTimeout(() => {
 						firstCard.parentNode.classList.add('matched');
 						secondCard.parentNode.classList.add('matched');
@@ -300,7 +308,7 @@ Game.prototype.clickCard = function () {
 				}
 				// If medals unmatched
 				else {
-					points = Math.max(0, points - 30);
+					this.setScoreMinus(30);
 					setTimeout(() => {
 						firstCard.classList.remove('back');
 						secondCard.classList.remove('back');
@@ -333,7 +341,7 @@ Game.prototype.resetWin = function () {
 	elementsGame.elements.luckyInput.value = "";
 	elementsGame.elements.luckyInput.disabled = true;
 	elementsGame.elements.luckyError.setAttribute('hidden', '');
-	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations";
+	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "Félicitations " + elementsGame.elements.pseudoInput.value;
 	elementsGame.elements.nbrClick.innerHTML = "Vous avez élu<div> " + this.fullName + "</div> avec " + this.numberOfClick + " clicks";
 	elementsGame.elements.rewards.innerHTML = "";
 	clearInterval(clockId);
@@ -357,12 +365,12 @@ Game.prototype.luckyGuess = function (e) {
 	}
 	else {
 		elementsGame.elements.luckyError.removeAttribute('hidden');
-		points = points - 150;
+		this.setScoreMinus(150);
 	}
 }
 
 Game.prototype.scoreTotal = function () {
-	points = Math.max(0, points - 1);
+	this.setScoreMinus(1)
 	this.total = points + " points";
 	if (points === 0) {
 		this.lostGame();
