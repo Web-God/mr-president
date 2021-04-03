@@ -7,6 +7,10 @@ export function Game(options) {
 	this.cardNumber = 14;
 	this.duration = 1000;
 	this.t = 0;
+
+	this.setScoreMinus = p => points = Math.max(0, points - p);
+	this.setScorePlus = p => points = Math.min(1000, points + p);
+
 	this.hide = elem => elem.classList.add('hide');
 	this.show = elem => elem.classList.remove('hide');
 
@@ -30,9 +34,6 @@ export function Game(options) {
 		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
 		elementsGame.elements.nbrClick.innerHTML = `<span class='greet-name'> ${elementsGame.elements.pseudoInput.value} </span> vous avez perdu !<div> ${randomPhotos.fullName} </div> est élu.`;
 	}
-
-	this.setScoreMinus = p => points = Math.max(0, points - p);
-	this.setScorePlus = p => points = Math.min(1000, points + p);
 
 	this.displayChrono = () => elementsGame.elements.clock.innerHTML = `${this.minutes}m ${this.seconds}s`;
 }
@@ -79,6 +80,7 @@ Game.prototype.registerElements = function () {
 }
 let elementsGame = new Game();
 elementsGame.registerElements();
+elementsGame.elements.pseudoInput.focus();
 
 Game.prototype.events = function () {
 	elementsGame.elements.btnStart.addEventListener('click', this.startGame.bind(this));
@@ -182,7 +184,6 @@ Game.prototype.startGame = function (n, w) {
 	elementsGame.elements.rules.classList.add('close');
 	elementsGame.elements.luckyInput.disabled = false;
 	elementsGame.elements.btnStart.classList.add('trans');
-	console.log("this.indicesArray Start: ", this.indicesArray);
 }
 
 /**
@@ -197,7 +198,6 @@ Game.prototype.startAgain = function (n) {
 	this.resetBtn();
 	this.init();
 	shuffle(medals);
-	console.log("this.indicesArray Start Again: ", this.indicesArray);
 }
 
 // Display deck cards
