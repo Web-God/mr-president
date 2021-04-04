@@ -355,7 +355,7 @@ Game.prototype.resetWin = function () {
 		const tip = document.querySelector(`.tip${i + 1}`);
 		tip.classList.remove('hide');
 		return tip.innerHTML = text;
-	});
+	}).join('');
 }
 
 // Check if input equal president's name
