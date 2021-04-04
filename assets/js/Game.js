@@ -6,7 +6,6 @@ export function Game(options) {
 	// Init Var
 	this.cardNumber = 14;
 	this.duration = 1000;
-	this.t = 0;
 
 	this.setScoreMinus = p => points = Math.max(0, points - p);
 	this.setScorePlus = p => points = Math.min(1000, points + p);
@@ -126,8 +125,8 @@ Game.prototype.resetTimer = function () {
 }
 
 /**
- * @description Random President's pics
  * @param {number} n
+ * @description Random President's pics
  */
 Game.prototype.shufflePhotos = function (n) {
 	this.president = this.shufflePresident[n];
@@ -175,7 +174,11 @@ Game.prototype.init = function (n) {
 	elementsGame.elements.btnSeeTip.classList.remove('trans');
 }
 
-// Start Game on click "Commencer"
+/**
+ * @param {number} n
+ * @param {number} w
+ * @description Start Game on click "Commencer"
+ */
 Game.prototype.startGame = function (n, w) {
 	w = Math.floor(Math.random() * women.length);
 	this.init();
@@ -202,10 +205,8 @@ Game.prototype.startAgain = function (n) {
 
 // Display deck cards
 Game.prototype.displayCards = function () {
-	for (let i = 0; i < this.cardNumber; i++) {
-		let cardHtml = `<div class="card"><img src="${this.shuffledCards[i].url}" data-id="${this.shuffledCards[i].id}" alt="${this.shuffledCards[i].title}" class="card_img"></div>`;
-		elementsGame.elements.containerCards.innerHTML += cardHtml;
-	}
+	const cardHtml = this.shuffledCards.map((i) => `<div class="card"><img src="${i.url}" data-id="${i.id}" alt="${i.title}" class="card_img"></div>`).join('');
+	elementsGame.elements.containerCards.innerHTML += cardHtml;
 }
 
 // When user play again
@@ -237,6 +238,8 @@ Game.prototype.resetGame = function (n) {
 	elementsGame.elements.containerCards.innerHTML = "";
 	elementsGame.elements.rewards.innerHTML = "";
 	this.pseudo.disabled = false;
+	elementsGame.elements.pseudoInput.value = "";
+	elementsGame.elements.pseudoInput.focus();
 }
 
 // Enable Buttons
@@ -251,10 +254,8 @@ Game.prototype.enableBtn = function () {
 
 // Display Indices
 Game.prototype.indices = function () {
-	for (let index = 0; index < this.tipsLen; index++) {
-		let tipsHtml = `<div class="${this.tipsPresident[index]} indice hide"></div>`;
-		indices.innerHTML += tipsHtml;
-	}
+	const tipsHtml = this.tipsPresident.map((i) => `<div class="${i} indice hide"></div>`).join('');
+	elementsGame.elements.indices.innerHTML += tipsHtml;
 }
 
 
@@ -285,7 +286,7 @@ Game.prototype.clickCard = function () {
 			flippedCards = cards.filter(card => card.classList.contains('back'));
 			firstCard = flippedCards[0];
 			secondCard = flippedCards[1];
-			// Display name of rewards in left sidebar
+			// Display rewards name in left sidebar
 			elementsGame.elements.rewards.innerHTML = displayRewards;
 			if (secondCard) {
 				elementsGame.elements.rewards.innerHTML = "";
@@ -349,12 +350,12 @@ Game.prototype.resetWin = function () {
 	elementsGame.elements.rewards.innerHTML = "";
 	clearInterval(clockId);
 	shuffle(medals);
-	// Display HTML for Indices
-	for (let index = 0; index < this.tipsLen; index++) {
-		let tipsHtml = document.querySelector(`.${this.tipsPresident[index]}`);
-		tipsHtml.innerHTML = elementsGame.elements.tipsArray[index];
-		this.show(tipsHtml);
-	}
+	// Display text for Indices
+	const tipsText = elementsGame.elements.tipsArray.map((text, i) => {
+		const tip = document.querySelector(`.tip${i + 1}`);
+		tip.classList.remove('hide');
+		return tip.innerHTML = text;
+	});
 }
 
 // Check if input equal president's name
@@ -375,8 +376,6 @@ Game.prototype.luckyGuess = function (e) {
 Game.prototype.scoreTotal = function () {
 	this.setScoreMinus(1)
 	this.total = `${points} points`;
-	if (points === 0) {
-		this.lostGame();
-	}
+	points === 0 ? this.lostGame() : null;
 	elementsGame.elements.scoreDisplay.innerHTML = this.total;
 }.bind(randomPhotos)
