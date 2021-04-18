@@ -280,7 +280,6 @@ Game.prototype.resetGame = function (n) {
 	this.pseudo.disabled = false;
 	this.elements.pseudoInput.value = "";
 	this.elements.pseudoInput.focus();
-	console.log(this.pseudo.score)
 }
 
 // Enable Buttons
