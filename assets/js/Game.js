@@ -1,14 +1,32 @@
 import { medals } from './medals';
 import { imgPresident, women } from './presidents';
 
-export function Game(options) {
+/**
+ * @description Game player
+ * @param {string} pseudo
+ * @param {number} score
+ * @param {number} rank
+ */
+export function Game() {
 	// this.playerName = options.playerName;
 	// Init Var
 	this.cardNumber = 14;
 	this.duration = 1000;
 
-	this.setScoreMinus = p => points = Math.max(0, points - p);
-	this.setScorePlus = p => points = Math.min(1000, points + p);
+	this.fullName = null;
+	this.lastName = null;
+
+	this.points = 1000;
+	this.clockId = null;
+
+	this.pseudo = {
+		score: `${this.points} points`,
+		rank: 8,
+		value: () => this.elements.pseudoInput.value
+	}
+
+	this.setScoreMinus = p => this.points = Math.max(0, this.points - p);
+	this.setScorePlus = p => this.points = Math.min(1000, this.points + p);
 
 	this.hide = elem => elem.classList.add('hide');
 	this.show = elem => elem.classList.remove('hide');
@@ -19,28 +37,14 @@ export function Game(options) {
 	this.tipsPresident = Object.keys(this.shufflePresident[0].indice);
 	this.tipsLen = this.tipsPresident.length;
 
-	this.emptyInput = (e, w) => {
-		w = Math.floor(Math.random() * women.length);
-		if (e.target && elementsGame.elements.luckyInput.value !== "") {
-			elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
-			elementsGame.elements.luckyInput.value = "";
-			elementsGame.elements.luckyError.setAttribute('hidden', '');
-		}
-	}
-	this.lostGame = () => {
-		this.resetWin();
-		elementsGame.elements.containerCards.innerHTML = "";
-		elementsGame.elements.nbrClick.previousElementSibling.innerHTML = "";
-		elementsGame.elements.nbrClick.innerHTML = `<span class='greet-name'> ${elementsGame.elements.pseudoInput.value} </span> vous avez perdu !<div> ${randomPhotos.fullName} </div> est élu.`;
-	}
-
-	this.displayChrono = () => elementsGame.elements.clock.innerHTML = `${this.minutes}m ${this.seconds}s`;
+	this.registerElements();
+	this.elements.pseudoInput.focus();
+	this.shufflePhotos(0);
 }
 
-let points = 1000, clockId;
 
 Game.prototype.registerElements = function () {
-	elementsGame.elements = {
+	this.elements = {
 		// Pseudo
 		pseudoInput: document.getElementById('pseudo'),
 		// Declare variables buttons
@@ -77,37 +81,51 @@ Game.prototype.registerElements = function () {
 		cardImage: document.getElementsByClassName('card_img')
 	}
 }
-let elementsGame = new Game();
-elementsGame.registerElements();
-elementsGame.elements.pseudoInput.focus();
 
 Game.prototype.events = function () {
-	elementsGame.elements.btnStart.addEventListener('click', this.startGame.bind(this));
-	elementsGame.elements.btnStartAgain.addEventListener('click', this.startAgain.bind(this));
-	elementsGame.elements.btnReset.addEventListener('click', this.resetGame.bind(this));
-	elementsGame.elements.luckySubmit.addEventListener('click', this.luckyGuess.bind(randomPhotos));
-	elementsGame.elements.luckyInput.addEventListener('click', this.emptyInput.bind(this));
-	elementsGame.elements.btnSeeTip.addEventListener('click', this.indicesReveal.bind(this));
+	this.elements.btnStart.addEventListener('click', this.startGame.bind(this));
+	this.elements.btnStartAgain.addEventListener('click', this.startAgain.bind(this));
+	this.elements.btnReset.addEventListener('click', this.resetGame.bind(this));
+	this.elements.luckySubmit.addEventListener('click', this.luckyGuess.bind(this));
+	this.elements.luckyInput.addEventListener('click', this.emptyInput.bind(this));
+	this.elements.btnSeeTip.addEventListener('click', this.indicesReveal.bind(this));
 	// Open new tab to Elysée website
-	elementsGame.elements.btnSeeMore.addEventListener('click', () => window.open(randomPhotos.locationUrl, '_blank'));
+	this.elements.btnSeeMore.addEventListener('click', () => window.open(this.locationUrl, '_blank'));
+}
+
+Game.prototype.emptyInput = function (e, w) {
+	w = Math.floor(Math.random() * women.length);
+	if (e.target && this.elements.luckyInput.value !== "") {
+		this.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
+		this.elements.luckyInput.value = "";
+		this.elements.luckyError.setAttribute('hidden', '');
+	}
+}
+Game.prototype.lostGame = function () {
+	this.resetWin();
+	this.elements.containerCards.innerHTML = "";
+	this.elements.nbrClick.previousElementSibling.innerHTML = "";
+	this.elements.nbrClick.innerHTML = `<span class='greet-name'> ${this.pseudo.value()} </span> vous avez perdu !<div> ${this.fullName} </div> est élu.`;
+}
+
+Game.prototype.displayChrono = function () {
+	this.elements.clock.innerHTML = `${this.minutes}m ${this.seconds}s`;
 }
 
 Game.prototype.timerGame = function () {
-	this.startChrono = new Date(1980, 6, 31, 1, 1, 60).getTime();
-	this.endChrono = new Date(1980, 6, 31, 1).getTime();
+	this.startChrono = Date.now();
+	this.totalTime = 2 * 60 * 1000;
 
-	let elapsedTime = this.startChrono - this.endChrono;
-
-	clockId = setInterval(() => {
-		elapsedTime -= 1000;
+	this.clockId = setInterval(() => {
+		let elapsedTime = this.totalTime - (Date.now() - this.startChrono);
 
 		this.minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
 		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
 		this.displayChrono();
 
-		if (elapsedTime === 0) {
-			clearInterval(clockId);
+		if (this.minutes === 0 && this.seconds === 0) {
+			clearInterval(this.clockId);
 			this.lostGame();
 		}
 
@@ -116,11 +134,11 @@ Game.prototype.timerGame = function () {
 }
 
 Game.prototype.resetTimer = function () {
-	points = 1000;
+	this.points = 1000;
 	this.minutes = 2;
 	this.seconds = 0;
-	clearInterval(clockId);
-	elementsGame.elements.scoreDisplay.innerHTML = `${points} points`;
+	clearInterval(this.clockId);
+	this.elements.scoreDisplay.innerHTML = `${this.points} points`;
 	this.displayChrono();
 }
 
@@ -137,42 +155,64 @@ Game.prototype.shufflePhotos = function (n) {
 		backgroundSize: "cover",
 		backgroundRepeat: "no-repeat"
 	}
-	Object.assign(elementsGame.elements.fotoPresident.style, stylesPres);
+	Object.assign(this.elements.fotoPresident.style, stylesPres);
 	// Display title
-	elementsGame.elements.titleName.innerHTML = this.fullName;
-	elementsGame.elements.titleMandat.innerHTML = this.president.mandat;
+	this.elements.titleName.innerHTML = this.fullName;
+	this.elements.titleMandat.innerHTML = this.president.mandat;
 	// Display indice
-	elementsGame.elements.tipsArray = Object.values(this.president.indice);
+	this.elements.tipsArray = Object.values(this.president.indice);
 	// URL to Elysée website
 	this.locationUrl = this.president.url;
 }
-let randomPhotos = new Game();
-randomPhotos.shufflePhotos(0);
 
 /**
  * @param {number} n
  */
 Game.prototype.initParams = function (n) {
 	this.t = 0;
-	points = 1000;
+	this.points = 1000;
 	n = Math.floor(Math.random() * imgPresident.length);
-	randomPhotos.shufflePhotos(n);
+	this.shufflePhotos(n);
 }
 
 Game.prototype.init = function (n) {
-	this.pseudo = elementsGame.elements.pseudoInput;
-	this.pseudo.disabled = true;
-	this.pseudoValue = this.pseudo.value;
+	// this.pseudo = this.elements.pseudoInput;
+	// this.pseudo.disabled = true;
+	// this.pseudoValue = this.pseudo.value;
+	this.pseudo.value();
 	this.initParams();
 	this.timerGame();
 	this.displayCards();
 	this.clickCard();
 	this.indices();
 	this.indicesArray = Array.from(this.tipsPresident);
-	this.hide(elementsGame.elements.title);
-	this.show(elementsGame.elements.btnSeeTip);
-	elementsGame.elements.btnSeeTip.classList.remove('trans');
+	this.hide(this.elements.title);
+	this.show(this.elements.btnSeeTip);
+	this.elements.btnSeeTip.classList.remove('trans');
+
+	this.elements.rewards.innerHTML = JSON.stringify(this.getHighscore());
 }
+
+Game.prototype.setHighscore = function (score) {
+	let highscore = this.getHighscore();
+
+	highscore.push(score);
+	localStorage.setItem('highscore', JSON.stringify(highscore));
+};
+Game.prototype.getHighscore = function () {
+	let highscore;
+	try {
+		highscore = JSON.parse(localStorage.getItem('highscore'));
+		if (!Array.isArray(highscore)) {
+			highscore = [];
+		}
+	}
+	catch (e) {
+		highscore = [];
+	}
+
+	return highscore;
+};
 
 /**
  * @param {number} n
@@ -183,10 +223,10 @@ Game.prototype.startGame = function (n, w) {
 	w = Math.floor(Math.random() * women.length);
 	this.init();
 	this.enableBtn();
-	elementsGame.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
-	elementsGame.elements.rules.classList.add('close');
-	elementsGame.elements.luckyInput.disabled = false;
-	elementsGame.elements.btnStart.classList.add('trans');
+	this.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
+	this.elements.rules.classList.add('close');
+	this.elements.luckyInput.disabled = false;
+	this.elements.btnStart.classList.add('trans');
 }
 
 /**
@@ -195,8 +235,8 @@ Game.prototype.startGame = function (n, w) {
  */
 Game.prototype.startAgain = function (n) {
 	// Empty container before init
-	elementsGame.elements.indices.innerHTML = "";
-	elementsGame.elements.luckyInput.disabled = false;
+	this.elements.indices.innerHTML = "";
+	this.elements.luckyInput.disabled = false;
 	this.initParams();
 	this.resetBtn();
 	this.init();
@@ -206,21 +246,21 @@ Game.prototype.startAgain = function (n) {
 // Display deck cards
 Game.prototype.displayCards = function () {
 	const cardHtml = this.shuffledCards.map((i) => `<div class="card"><img src="${i.url}" data-id="${i.id}" alt="${i.title}" class="card_img"></div>`).join('');
-	elementsGame.elements.containerCards.innerHTML += cardHtml;
+	this.elements.containerCards.innerHTML += cardHtml;
 }
 
 // When user play again
 Game.prototype.resetBtn = function () {
-	this.hide(elementsGame.elements.btnStartAgain);
-	this.hide(elementsGame.elements.btnSeeMore);
-	this.hide(elementsGame.elements.title)
-	this.show(elementsGame.elements.luckySubmit)
-	this.show(elementsGame.elements.btnSeeTip);
-	elementsGame.elements.luckyError.setAttribute('hidden', '');
-	elementsGame.elements.luckyGreets.setAttribute('hidden', '');
-	elementsGame.elements.luckyInput.value = "";
-	elementsGame.elements.luckyInput.focus();
-	elementsGame.elements.containerCards.innerHTML = "";
+	this.hide(this.elements.btnStartAgain);
+	this.hide(this.elements.btnSeeMore);
+	this.hide(this.elements.title)
+	this.show(this.elements.luckySubmit)
+	this.show(this.elements.btnSeeTip);
+	this.elements.luckyError.setAttribute('hidden', '');
+	this.elements.luckyGreets.setAttribute('hidden', '');
+	this.elements.luckyInput.value = "";
+	this.elements.luckyInput.focus();
+	this.elements.containerCards.innerHTML = "";
 	shuffle(medals);
 }
 
@@ -228,51 +268,52 @@ Game.prototype.resetBtn = function () {
 Game.prototype.resetGame = function (n) {
 	this.initParams();
 	this.resetTimer();
-	elementsGame.elements.indices.innerHTML = "";
+	this.elements.indices.innerHTML = "";
 	this.resetBtn();
-	this.hide(elementsGame.elements.btnReset);
-	this.hide(elementsGame.elements.btnSeeTip);
-	this.hide(elementsGame.elements.lucky);
-	this.show(elementsGame.elements.title);
-	elementsGame.elements.btnStart.classList.remove('trans');
-	elementsGame.elements.containerCards.innerHTML = "";
-	elementsGame.elements.rewards.innerHTML = "";
+	this.hide(this.elements.btnReset);
+	this.hide(this.elements.btnSeeTip);
+	this.hide(this.elements.lucky);
+	this.show(this.elements.title);
+	this.elements.btnStart.classList.remove('trans');
+	this.elements.containerCards.innerHTML = "";
+	this.elements.rewards.innerHTML = "";
 	this.pseudo.disabled = false;
-	elementsGame.elements.pseudoInput.value = "";
-	elementsGame.elements.pseudoInput.focus();
+	this.elements.pseudoInput.value = "";
+	this.elements.pseudoInput.focus();
+	console.log(this.pseudo.score)
 }
 
 // Enable Buttons
 Game.prototype.enableBtn = function () {
-	this.show(elementsGame.elements.btnReset);
-	this.show(elementsGame.elements.luckySubmit);
-	this.show(elementsGame.elements.lucky);
-	this.show(elementsGame.elements.btnSeeTip);
-	elementsGame.elements.luckyInput.value = "";
-	elementsGame.elements.luckyInput.focus();
+	this.show(this.elements.btnReset);
+	this.show(this.elements.luckySubmit);
+	this.show(this.elements.lucky);
+	this.show(this.elements.btnSeeTip);
+	this.elements.luckyInput.value = "";
+	this.elements.luckyInput.focus();
 }
 
 // Display Indices
 Game.prototype.indices = function () {
 	const tipsHtml = this.tipsPresident.map((i) => `<div class="${i} indice hide"></div>`).join('');
-	elementsGame.elements.indices.innerHTML += tipsHtml;
+	this.elements.indices.innerHTML += tipsHtml;
 }
 
 
 Game.prototype.indicesReveal = function () {
 	const displayTips = document.querySelector(`.${this.indicesArray[0]}`);
 	this.show(displayTips);
-	displayTips.innerHTML = elementsGame.elements.tipsArray[this.t];
+	displayTips.innerHTML = this.elements.tipsArray[this.t];
 	this.indicesArray.splice(0, 1);
 	this.t++;
-	this.indicesArray.length === 0 ? elementsGame.elements.btnSeeTip.classList.add('trans') : null;
+	this.indicesArray.length === 0 ? this.elements.btnSeeTip.classList.add('trans') : null;
 	this.setScoreMinus(100);
 }
 
 // Manage displaying Cards
 Game.prototype.clickCard = function () {
 	// Make a shallow copy of cardImage to add classes back
-	let cards = [...elementsGame.elements.cardImage],
+	let cards = [...this.elements.cardImage],
 		flippedCards,
 		firstCard,
 		secondCard;
@@ -287,9 +328,9 @@ Game.prototype.clickCard = function () {
 			firstCard = flippedCards[0];
 			secondCard = flippedCards[1];
 			// Display rewards name in left sidebar
-			elementsGame.elements.rewards.innerHTML = displayRewards;
+			this.elements.rewards.innerHTML = displayRewards;
 			if (secondCard) {
-				elementsGame.elements.rewards.innerHTML = "";
+				this.elements.rewards.innerHTML = "";
 			}
 			// If medals matched
 			if (flippedCards.length === 2) {
@@ -323,59 +364,65 @@ Game.prototype.clickCard = function () {
 			}
 		});
 	});
-	// Link randomPhotos to retrieve this.fullName from shufflePhotos
-}.bind(randomPhotos);
+};
 
 Game.prototype.stopEvent = function () {
-	elementsGame.elements.containerCards.classList.add('disabled');
+	this.elements.containerCards.classList.add('disabled');
 	setTimeout(() => {
-		elementsGame.elements.containerCards.classList.remove('disabled');
+		this.elements.containerCards.classList.remove('disabled');
 	}, this.duration);
 }
 
 // Reset Game when user won
 Game.prototype.resetWin = function () {
-	this.show(elementsGame.elements.title);
-	elementsGame.elements.luckyGreets.removeAttribute('hidden');
-	elementsGame.elements.luckyGreets.classList.remove('close');
-	this.show(elementsGame.elements.btnStartAgain);
-	this.show(elementsGame.elements.btnSeeMore);
-	this.hide(elementsGame.elements.luckySubmit);
-	this.hide(elementsGame.elements.btnSeeTip);
-	elementsGame.elements.luckyInput.value = "";
-	elementsGame.elements.luckyInput.disabled = true;
-	elementsGame.elements.luckyError.setAttribute('hidden', '');
-	elementsGame.elements.nbrClick.previousElementSibling.innerHTML = `Félicitations ${elementsGame.elements.pseudoInput.value}`;
-	elementsGame.elements.nbrClick.innerHTML = `Vous avez élu<div> ${this.fullName} </div> avec ${this.numberOfClick} clicks`;
-	elementsGame.elements.rewards.innerHTML = "";
-	clearInterval(clockId);
+	this.show(this.elements.title);
+	this.elements.luckyGreets.removeAttribute('hidden');
+	this.elements.luckyGreets.classList.remove('close');
+	this.show(this.elements.btnStartAgain);
+	this.show(this.elements.btnSeeMore);
+	this.hide(this.elements.luckySubmit);
+	this.hide(this.elements.btnSeeTip);
+	this.elements.luckyInput.value = "";
+	this.elements.luckyInput.disabled = true;
+	this.elements.luckyError.setAttribute('hidden', '');
+	this.elements.nbrClick.previousElementSibling.innerHTML = `Félicitations ${this.elements.pseudoInput.value}`;
+	this.elements.nbrClick.innerHTML = `Vous avez élu<div> ${this.fullName} </div> avec ${this.numberOfClick} clicks`;
+	this.elements.rewards.innerHTML = "";
+	clearInterval(this.clockId);
 	shuffle(medals);
 	// Display text for Indices
-	const tipsText = elementsGame.elements.tipsArray.map((text, i) => {
+	this.elements.tipsArray.map((text, i) => {
 		const tip = document.querySelector(`.tip${i + 1}`);
 		tip.classList.remove('hide');
 		return tip.innerHTML = text;
 	}).join('');
+
+	var highscore = this.setHighscore({
+		pseudo: this.pseudo.value(),
+		points: this.points
+	});
 }
 
 // Check if input equal president's name
 Game.prototype.luckyGuess = function (e) {
 	e.preventDefault();
-	let userGuess = (elementsGame.elements.luckyInput.value).toLowerCase();
+	const userGuess = (this.elements.luckyInput.value).toLowerCase();
 	if (userGuess.includes(this.fullName) || userGuess.includes(this.lastName)) {
 		this.resetWin();
-		elementsGame.elements.luckyError.setAttribute('hidden', '');
-		elementsGame.elements.containerCards.innerHTML = "";
+		this.elements.luckyError.setAttribute('hidden', '');
+		this.elements.containerCards.innerHTML = "";
 	}
 	else {
-		elementsGame.elements.luckyError.removeAttribute('hidden');
+		this.elements.luckyError.removeAttribute('hidden');
 		this.setScoreMinus(200);
 	}
 }
 
 Game.prototype.scoreTotal = function () {
-	this.setScoreMinus(1)
-	this.total = `${points} points`;
-	points === 0 ? this.lostGame() : null;
-	elementsGame.elements.scoreDisplay.innerHTML = this.total;
-}.bind(randomPhotos)
+	this.setScoreMinus(1);
+	this.total = `${this.points} points`;
+	this.points === 0 ? this.lostGame() : null;
+	this.elements.scoreDisplay.innerHTML = this.total;
+};
+
+let game = new Game();
