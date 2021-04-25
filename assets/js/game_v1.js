@@ -1,8 +1,6 @@
 import { Game } from './Game';
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 	"use strict";
 	var game = new Game();
-  game.events();
-	// game.init( {
-	// } ) ;
-} ) ;
+	game.events();
+});

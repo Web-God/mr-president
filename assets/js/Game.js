@@ -8,7 +8,6 @@ import { imgPresident, women } from './presidents';
  * @param {number} rank
  */
 export function Game() {
-	// this.playerName = options.playerName;
 	// Init Var
 	this.cardNumber = 14;
 	this.duration = 1000;
@@ -24,6 +23,9 @@ export function Game() {
 		rank: 8,
 		value: () => this.elements.pseudoInput.value
 	}
+
+	this.allScore = null;
+	this.ranking = null;
 
 	this.setScoreMinus = p => this.points = Math.max(0, this.points - p);
 	this.setScorePlus = p => this.points = Math.min(1000, this.points + p);
@@ -42,7 +44,6 @@ export function Game() {
 	this.shufflePhotos(0);
 }
 
-
 Game.prototype.registerElements = function () {
 	this.elements = {
 		// Pseudo
@@ -59,9 +60,11 @@ Game.prototype.registerElements = function () {
 		rules: document.querySelector('.rules'),
 		btnSeeMore: document.querySelector('.more'),
 		// Display variables pic's president + tips
-		fotoPresident: document.getElementById('center'),
+		containerCenter: document.getElementById('center'),
+		contentCenter: document.querySelector('.center-content'),
 		indices: document.getElementById('indices'),
 		rewards: document.querySelector('.rewards'),
+		rankDisplay: document.getElementById('rank'),
 		// Declare variables Title President's names
 		title: document.querySelector('.title_president'),
 		titleName: document.querySelector('.title_president-name'),
@@ -76,7 +79,7 @@ Game.prototype.registerElements = function () {
 		luckyGreets: document.getElementById('greets'),
 		nbrClick: document.querySelector('.nclick'),
 		// Declare variables for images
-		containerCards: document.getElementById('cards__container'),
+		containerCards: document.querySelector('.cards__container'),
 		card: document.getElementsByClassName('card'),
 		cardImage: document.getElementsByClassName('card_img')
 	}
@@ -101,9 +104,13 @@ Game.prototype.emptyInput = function (e, w) {
 		this.elements.luckyError.setAttribute('hidden', '');
 	}
 }
+
 Game.prototype.lostGame = function () {
 	this.resetWin();
-	this.elements.containerCards.innerHTML = "";
+	// this.elements.containerCards.innerHTML = "";
+	this.elements.containerCenter.removeChild(this.elements.containerCards);
+	this.hide(this.elements.containerCards);
+	this.elements.containerCards.remove();
 	this.elements.nbrClick.previousElementSibling.innerHTML = "";
 	this.elements.nbrClick.innerHTML = `<span class='greet-name'> ${this.pseudo.value()} </span> vous avez perdu !<div> ${this.fullName} </div> est élu.`;
 }
@@ -155,7 +162,7 @@ Game.prototype.shufflePhotos = function (n) {
 		backgroundSize: "cover",
 		backgroundRepeat: "no-repeat"
 	}
-	Object.assign(this.elements.fotoPresident.style, stylesPres);
+	Object.assign(this.elements.containerCenter.style, stylesPres);
 	// Display title
 	this.elements.titleName.innerHTML = this.fullName;
 	this.elements.titleMandat.innerHTML = this.president.mandat;
@@ -176,12 +183,14 @@ Game.prototype.initParams = function (n) {
 }
 
 Game.prototype.init = function (n) {
-	// this.pseudo = this.elements.pseudoInput;
-	// this.pseudo.disabled = true;
-	// this.pseudoValue = this.pseudo.value;
+	let cardsContainer = document.createElement('div');
+	cardsContainer.classList.add('cards__container');
+	this.elements.containerCenter.appendChild(this.elements.containerCards);
+	this.hide(this.elements.contentCenter);
 	this.pseudo.value();
 	this.initParams();
 	this.timerGame();
+	this.show(this.elements.containerCards);
 	this.displayCards();
 	this.clickCard();
 	this.indices();
@@ -189,16 +198,30 @@ Game.prototype.init = function (n) {
 	this.hide(this.elements.title);
 	this.show(this.elements.btnSeeTip);
 	this.elements.btnSeeTip.classList.remove('trans');
-
-	this.elements.rewards.innerHTML = JSON.stringify(this.getHighscore());
 }
 
 Game.prototype.setHighscore = function (score) {
 	let highscore = this.getHighscore();
-
-	highscore.push(score);
+	let pointsValue = [];
+	let maxi = [0];
+	let mini;
+	this.allScore = highscore.map((i) => {
+		this.ranking = {
+			pseudo: i.pseudo,
+			points: i.points
+		}
+		let sortable = [];
+		for (let player in this.ranking) {
+			if (this.ranking.hasOwnProperty(player)) {
+				sortable.push([this.ranking[player]]);
+			}
+		}
+		let rank = Array.from(sortable);
+		return `<div>${rank.join(' : ')} points</div>`;
+	})
+	highscore.length <= 4 ? highscore.push(score) : null;
 	localStorage.setItem('highscore', JSON.stringify(highscore));
-};
+}
 Game.prototype.getHighscore = function () {
 	let highscore;
 	try {
@@ -212,7 +235,7 @@ Game.prototype.getHighscore = function () {
 	}
 
 	return highscore;
-};
+}
 
 /**
  * @param {number} n
@@ -237,7 +260,6 @@ Game.prototype.startAgain = function (n) {
 	// Empty container before init
 	this.elements.indices.innerHTML = "";
 	this.elements.luckyInput.disabled = false;
-	this.initParams();
 	this.resetBtn();
 	this.init();
 	shuffle(medals);
@@ -258,6 +280,7 @@ Game.prototype.resetBtn = function () {
 	this.show(this.elements.btnSeeTip);
 	this.elements.luckyError.setAttribute('hidden', '');
 	this.elements.luckyGreets.setAttribute('hidden', '');
+	this.elements.rankDisplay.setAttribute('hidden', '');
 	this.elements.luckyInput.value = "";
 	this.elements.luckyInput.focus();
 	this.elements.containerCards.innerHTML = "";
@@ -275,7 +298,6 @@ Game.prototype.resetGame = function (n) {
 	this.hide(this.elements.lucky);
 	this.show(this.elements.title);
 	this.elements.btnStart.classList.remove('trans');
-	this.elements.containerCards.innerHTML = "";
 	this.elements.rewards.innerHTML = "";
 	this.pseudo.disabled = false;
 	this.elements.pseudoInput.value = "";
@@ -297,7 +319,6 @@ Game.prototype.indices = function () {
 	const tipsHtml = this.tipsPresident.map((i) => `<div class="${i} indice hide"></div>`).join('');
 	this.elements.indices.innerHTML += tipsHtml;
 }
-
 
 Game.prototype.indicesReveal = function () {
 	const displayTips = document.querySelector(`.${this.indicesArray[0]}`);
@@ -347,6 +368,7 @@ Game.prototype.clickCard = function () {
 					}, this.duration);
 					// If all cards are flipped
 					if (this.countEven === (this.cardNumber / 2)) {
+						this.elements.containerCenter.removeChild(this.elements.containerCards);
 						this.resetWin();
 					}
 				}
@@ -375,7 +397,9 @@ Game.prototype.stopEvent = function () {
 // Reset Game when user won
 Game.prototype.resetWin = function () {
 	this.show(this.elements.title);
+	this.show(this.elements.contentCenter);
 	this.elements.luckyGreets.removeAttribute('hidden');
+	this.elements.rankDisplay.removeAttribute('hidden');
 	this.elements.luckyGreets.classList.remove('close');
 	this.show(this.elements.btnStartAgain);
 	this.show(this.elements.btnSeeMore);
@@ -400,6 +424,11 @@ Game.prototype.resetWin = function () {
 		pseudo: this.pseudo.value(),
 		points: this.points
 	});
+	if (this.ranking !== null) {
+		this.elements.rankDisplay.innerHTML = `${this.allScore.join(' ')}`;
+	} else {
+		this.hide(this.elements.rankDisplay);
+	}
 }
 
 // Check if input equal president's name
@@ -409,7 +438,7 @@ Game.prototype.luckyGuess = function (e) {
 	if (userGuess.includes(this.fullName) || userGuess.includes(this.lastName)) {
 		this.resetWin();
 		this.elements.luckyError.setAttribute('hidden', '');
-		this.elements.containerCards.innerHTML = "";
+		this.elements.containerCenter.removeChild(this.elements.containerCards);
 	}
 	else {
 		this.elements.luckyError.removeAttribute('hidden');
