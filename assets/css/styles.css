@@ -167,7 +167,7 @@ input {
   align-items: center;
 }
 
-.fade-in, .center-content #rank, .center-content #greets {
+.fade-in, .center-content .containrank #rank, .center-content #greets {
   animation: fadeIn ease 2s;
   -webkit-animation: fadeIn ease 2s;
   -moz-animation: fadeIn ease 2s;
@@ -403,12 +403,6 @@ input {
   flex-direction: column;
   margin-bottom: 1em;
 }
-#leftside .rewards {
-  width: 235px;
-  margin-top: 3em;
-  text-align: center;
-  color: #FAFAFA;
-}
 #leftside .btn-tip {
   margin-top: 3em;
 }
@@ -532,7 +526,7 @@ input {
 }
 .center-content #greets {
   font-family: "Garamond Regular";
-  padding: 30px;
+  padding: 0 30px 30px 30px;
   color: #8A1C2C;
   font-size: 2rem;
   background-color: rgba(255, 255, 255, 0.7);
@@ -545,16 +539,34 @@ input {
 .center-content #greets .greet-name {
   text-transform: capitalize;
 }
-.center-content #rank {
+.center-content .containrank {
+  text-align: center;
+}
+.center-content .containrank #rank {
   font-family: "Roboto";
-  padding: 30px;
+  padding: 0 30px 30px 30px;
   color: #333333;
   font-size: 1.3rem;
   background-color: rgba(255, 255, 255, 0.7);
   margin-top: 0.1rem;
+  text-align: left;
 }
-.center-content #rank div::first-letter {
+.center-content .containrank #rank .ranki::first-letter {
   text-transform: uppercase;
+}
+.center-content .btn-clear {
+  font-family: "Roboto";
+  padding: 5px 7px;
+  margin-top: 1px;
+  color: #333333;
+  background-color: #FFFFFF;
+  transition: all ease-out 0.7s;
+  border: none;
+  cursor: pointer;
+}
+.center-content .btn-clear:hover {
+  color: #FAFAFA;
+  background-color: #226A8A;
 }
 
 .trans {
@@ -572,34 +584,20 @@ input {
   display: none;
 }
 
-.btn-close-rules,
-.btn-close-greets {
+:is(.btn-close-rules, .btn-close-greets, .btn-close-rank) {
   cursor: pointer;
 }
-.btn-close-rules::after,
-.btn-close-greets::after {
-  position: absolute;
-  top: 7px;
-  bottom: 0;
-  left: auto;
-  right: 20px;
+:is(.btn-close-rules, .btn-close-greets, .btn-close-rank)::after {
   content: "⨯";
   /* https://www.fileformat.info/info/unicode/char/2a2f/index.htm */
   font-size: 35px;
-  color: #FAFAFA;
-  line-height: 25px;
-  height: 30px;
-  text-align: center;
+  color: #226A8A;
+  margin-left: 94%;
   transition: transform 0.5s;
 }
-.btn-close-rules:hover::after,
-.btn-close-greets:hover::after {
+:is(.btn-close-rules, .btn-close-greets, .btn-close-rank):hover::after {
   color: #8A1C2C;
   transform: rotate(90deg);
-}
-
-.btn-close-greets::after {
-  color: #226A8A;
 }
 
 .disabled {
@@ -624,12 +622,26 @@ input {
   grid-column-gap: 1px;
 }
 .cards__container .card {
+  position: relative;
   background-color: #FFFFFF;
   border: 1px solid #8A1C2C;
   transition: transform 1s ease-in-out;
   overflow: hidden;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   transform-style: preserve-3d;
+}
+.cards__container .card .rewards {
+  position: absolute;
+  z-index: 6;
+  width: 80%;
+  padding: 0.2rem;
+  background-color: #FFFFFF;
+  text-align: center;
+  color: #333333;
+  top: 45%;
+  font-size: 0.8rem;
+  right: 50%;
+  transform: translateX(50%);
 }
 .cards__container .card .card_img {
   transition: opacity 1s ease-in-out;
@@ -650,6 +662,7 @@ input {
   transform-style: preserve-3d;
   opacity: 1;
   pointer-events: none;
+  z-index: 5;
 }
 .cards__container .matched {
   opacity: 0;

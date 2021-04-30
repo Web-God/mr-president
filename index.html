@@ -33,16 +33,21 @@
         <button type="button" class="btn-submit btn-tip" id="seetip">Un indice ?</button>
       </div>
       <button type="button" class="btn-submit hide" id="start-again" hidden>Recommencer&nbsp;?</button>
-      <div class="rewards"></div>
+      <!-- <div class="rewards"></div> -->
     </div>
     <div id="center">
       <div class="center-content hide">
         <div id="greets" hidden>
-          <!-- <span class="btn-close-greets" onclick="this.parentNode.classList.add('close')"></span> -->
+          <span role="button" class="btn-close-greets" onclick="this.parentNode.classList.add('close')"></span>
           <p class="greet-name"></p>
           <p class="nclick"></p>
         </div>
-        <div id="rank" hidden></div>
+        <div class="containrank hide">
+          <div id="rank">
+            <span role="button" class="btn-close-rank"></span>
+          </div>
+          <button type="button" class="btn-clear" id="clearsession">Effacer</button>
+        </div>
       </div>
       <div id="morebnf"></div>
       <div class="rules">
@@ -102,7 +107,7 @@
       </div>
       <div class="score">1000 points</div>
       <div id="indices"></div>
-      <button class="more hide">En savoir +</button>
+      <button type="button" class="more hide">En savoir +</button>
       <span class="moreover">&nbsp;</span>
     </div>
   </div>
