@@ -138,9 +138,6 @@ Game.prototype.displayChrono = function (m, s) {
 }
 
 Game.prototype.timerGame = function () {
-	// this.startChrono = Date.now();
-	// this.totalTime = this.initChrono * 60 * 1000;
-
 	let startChrono = new Date(1980, 6, 31, 1, this.initChrono, 0).getTime();
 	let endChrono = new Date(1980, 6, 31, 1).getTime();
 
@@ -148,7 +145,6 @@ Game.prototype.timerGame = function () {
 
 	this.clockId = setInterval(() => {
 		elapsedTime -= 1000;
-		// let elapsedTime = this.totalTime - (Date.now() - this.startChrono);
 
 		this.minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
 		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
@@ -468,7 +464,7 @@ Game.prototype.resetWin = function () {
 	}
 }
 
-// Check if input equal president's name
+// Check if input value equal president's name
 Game.prototype.luckyGuess = function (e) {
 	e.preventDefault();
 	const userGuess = (this.elements.luckyInput.value).toLowerCase();
@@ -489,5 +485,3 @@ Game.prototype.scoreTotal = function () {
 	this.points === 0 ? this.lostGame() : null;
 	this.elements.scoreDisplay.innerHTML = this.total;
 };
-
-let game = new Game();
