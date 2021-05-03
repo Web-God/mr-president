@@ -14,7 +14,8 @@ export function Game() {
 	this.fullName = null;
 	this.lastName = null;
 
-	this.points = 1000;
+	this.initChrono = 2;
+	this.initPoints = 1000;
 	this.clockId = null;
 
 	this.pseudo = {
@@ -26,7 +27,7 @@ export function Game() {
 	this.ranking = null;
 
 	this.setScoreMinus = p => this.points = Math.max(0, this.points - p);
-	this.setScorePlus = p => this.points = Math.min(1000, this.points + p);
+	this.setScorePlus = p => this.points = Math.min(this.initPoints, this.points + p);
 
 	this.hide = elem => elem.classList.add('hide');
 	this.show = elem => elem.classList.remove('hide');
@@ -40,6 +41,7 @@ export function Game() {
 	this.registerElements();
 	this.elements.pseudoInput.focus();
 	this.shufflePhotos(0);
+	this.displayChrono(this.initChrono, 0);
 }
 
 Game.prototype.registerElements = function () {
@@ -129,21 +131,29 @@ Game.prototype.lostGame = function () {
 	this.elements.nbrClick.innerHTML = `<span class='greet-name'> ${this.pseudo.value()} </span> vous avez perdu !<div> ${this.fullName} </div> est élu.`;
 }
 
-Game.prototype.displayChrono = function () {
-	this.elements.clock.innerHTML = `${this.minutes}m ${this.seconds}s`;
+Game.prototype.displayChrono = function (m, s) {
+	m = this.initChrono;
+	this.elements.clock.innerHTML = `${m}m  ${s}s`;
+	this.elements.scoreDisplay.innerHTML = `${this.initPoints} points`;
 }
 
 Game.prototype.timerGame = function () {
-	this.startChrono = Date.now();
-	this.totalTime = 2 * 60 * 1000;
+	// this.startChrono = Date.now();
+	// this.totalTime = this.initChrono * 60 * 1000;
+
+	let startChrono = new Date(1980, 6, 31, 1, this.initChrono, 0).getTime();
+	let endChrono = new Date(1980, 6, 31, 1).getTime();
+
+	let elapsedTime = startChrono - endChrono;
 
 	this.clockId = setInterval(() => {
-		let elapsedTime = this.totalTime - (Date.now() - this.startChrono);
+		elapsedTime -= 1000;
+		// let elapsedTime = this.totalTime - (Date.now() - this.startChrono);
 
 		this.minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
 		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
-		this.displayChrono();
+		this.elements.clock.innerHTML = `${this.minutes}m ${this.seconds}s`;
 
 		if (this.minutes === 0 && this.seconds === 0) {
 			clearInterval(this.clockId);
@@ -155,12 +165,12 @@ Game.prototype.timerGame = function () {
 }
 
 Game.prototype.resetTimer = function () {
-	this.points = 1000;
-	this.minutes = 2;
+	this.points = this.initPoints;
+	this.minutes = this.initChrono;
 	this.seconds = 0;
 	clearInterval(this.clockId);
 	this.elements.scoreDisplay.innerHTML = `${this.points} points`;
-	this.displayChrono();
+	this.displayChrono(this.initChrono, 0);
 }
 
 /**
@@ -193,7 +203,7 @@ Game.prototype.initParams = function (n) {
 	this.t = 0;
 	this.numOfTips = Array.from({ length: this.tipsText.length }, (v, k) => k);
 	this.remainNum = [...this.numOfTips];
-	this.points = 1000;
+	this.points = this.initPoints;
 	n = Math.floor(Math.random() * imgPresident.length);
 	this.shufflePhotos(n);
 }
@@ -218,9 +228,6 @@ Game.prototype.init = function (n) {
 
 Game.prototype.setHighscore = function (score) {
 	let highscore = this.getHighscore();
-	let pointsValue = [];
-	let maxi = [0];
-	let mini;
 	this.allScore = highscore.map((i) => {
 		this.ranking = {
 			pseudo: i.pseudo,
@@ -308,6 +315,7 @@ Game.prototype.resetBtn = function () {
 Game.prototype.resetGame = function (n) {
 	this.initParams();
 	this.resetTimer();
+	this.rankRemove();
 	this.elements.indices.innerHTML = "";
 	this.resetBtn();
 	this.hide(this.elements.btnReset);

@@ -1,7 +1,7 @@
 export const imgPresident = [
   {
     'name': 'Emmanuel Macron',
-    'lastName':'Macron',
+    'lastName': 'Macron',
     'mandat': 'Mandat en cours',
     'src': 'assets/img/Emmanuel-Macron.jpeg',
     'url': 'https://www.elysee.fr/emmanuel-macron',
@@ -14,7 +14,7 @@ export const imgPresident = [
   },
   {
     'name': 'François Hollande',
-    'lastName':'Hollande',
+    'lastName': 'Hollande',
     'mandat': '2012 - 2017',
     'src': 'assets/img/francois-hollande.jpeg',
     'url': 'https://www.elysee.fr/francois-hollande',
@@ -27,7 +27,7 @@ export const imgPresident = [
   },
   {
     'name': 'Nicolas Sarkozy',
-    'lastName':'Sarkozy',
+    'lastName': 'Sarkozy',
     'mandat': '2007 - 2012',
     'src': 'assets/img/nicolas-sarkozy.jpeg',
     'url': 'https://www.elysee.fr/nicolas-sarkozy',
@@ -40,7 +40,7 @@ export const imgPresident = [
   },
   {
     'name': 'Jacques Chirac',
-    'lastName':'Chirac',
+    'lastName': 'Chirac',
     'mandat': '1995 - 2007',
     'src': 'assets/img/jacques-chirac.jpeg',
     'url': 'https://www.elysee.fr/jacques-chirac',
@@ -53,7 +53,7 @@ export const imgPresident = [
   },
   {
     'name': 'François Mitterand',
-    'lastName':'Mitterand',
+    'lastName': 'Mitterand',
     'mandat': "1981 - 1995",
     'src': 'assets/img/francois-mitterand.jpeg',
     'url': 'https://www.elysee.fr/francois-mitterrand',
@@ -66,7 +66,7 @@ export const imgPresident = [
   },
   {
     'name': 'Valéry Giscard d\'Estaing',
-    'lastName':'Giscard d\'Estaing',
+    'lastName': 'Giscard d\'Estaing',
     'mandat': '1974 - 1981',
     'src': 'assets/img/valery-giscard-destaing.jpeg',
     'url': 'https://www.elysee.fr/valery-giscard-d-estaing',
@@ -79,7 +79,7 @@ export const imgPresident = [
   },
   {
     'name': 'Georges Pompidou',
-    'lastName':'Pompidou',
+    'lastName': 'Pompidou',
     'mandat': '1969 - 1974 ',
     'src': 'assets/img/georges-pompidou.jpeg',
     'url': 'https://www.elysee.fr/georges-pompidou',
@@ -92,7 +92,7 @@ export const imgPresident = [
   },
   {
     'name': 'Charles de Gaulle',
-    'lastName':'de Gaulle',
+    'lastName': 'de Gaulle',
     'mandat': '1959 - 1969',
     'src': 'assets/img/Charles-De-Gaulle.jpeg',
     'url': 'https://www.elysee.fr/charles-de-gaulle',
@@ -105,7 +105,7 @@ export const imgPresident = [
   },
   {
     'name': 'René Coty',
-    'lastName':'Coty',
+    'lastName': 'Coty',
     'mandat': '1954 - 1959',
     'src': 'assets/img/rene-coty.jpeg',
     'url': 'https://www.elysee.fr/rene-coty',
@@ -118,7 +118,7 @@ export const imgPresident = [
   },
   {
     'name': 'Vincent Auriol',
-    'lastName':'Auriol',
+    'lastName': 'Auriol',
     'mandat': '1947 - 1954',
     'src': 'assets/img/Vincent-Auriol.jpeg',
     'url': 'https://www.elysee.fr/vincent-auriol',
@@ -131,7 +131,7 @@ export const imgPresident = [
   },
   {
     'name': 'Albert Lebrun',
-    'lastName':'Lebrun',
+    'lastName': 'Lebrun',
     'mandat': '1932 - 1940',
     'src': 'assets/img/Albert-Lebrun.jpeg',
     'url': 'https://www.elysee.fr/albert-lebrun',
@@ -144,7 +144,7 @@ export const imgPresident = [
   },
   {
     'name': 'Paul Doumer',
-    'lastName':'Doumer',
+    'lastName': 'Doumer',
     'mandat': '1931 - 1932',
     'src': 'assets/img/Paul-Doumer.jpeg',
     'url': 'https://www.elysee.fr/paul-doumer',
@@ -157,7 +157,7 @@ export const imgPresident = [
   },
   {
     'name': 'Gaston Doumergue',
-    'lastName':'Doumergue',
+    'lastName': 'Doumergue',
     'mandat': '1924 - 1931',
     'src': 'assets/img/Gaston-Doumergue.jpeg',
     'url': 'https://www.elysee.fr/gaston-doumergue',
@@ -170,7 +170,7 @@ export const imgPresident = [
   },
   {
     'name': 'Alexandre Millerand',
-    'lastName':'Millerand',
+    'lastName': 'Millerand',
     'mandat': '1920 - 1924',
     'src': 'assets/img/Alexandre-Millerand.jpeg',
     'url': 'https://www.elysee.fr/alexandre-millerand',
@@ -183,7 +183,7 @@ export const imgPresident = [
   },
   {
     'name': 'Paul Deschanel',
-    'lastName':'Deschanel',
+    'lastName': 'Deschanel',
     'mandat': '1920 - 1920',
     'src': 'assets/img/Paul-Deschanel.jpeg',
     'url': 'https://www.elysee.fr/paul-deschanel',
@@ -196,7 +196,7 @@ export const imgPresident = [
   },
   {
     'name': 'Raymond Poincaré',
-    'lastName':'Poincaré',
+    'lastName': 'Poincaré',
     'mandat': '1913 - 1920',
     'src': 'assets/img/Raymond-Poincare.jpeg',
     'url': 'https://www.elysee.fr/raymond-poincare',
@@ -209,7 +209,7 @@ export const imgPresident = [
   },
   {
     'name': 'Armand Fallières',
-    'lastName':'Fallières',
+    'lastName': 'Fallières',
     'mandat': '1906 - 1913',
     'src': 'assets/img/Armand-Fallieres.jpeg',
     'url': 'https://www.elysee.fr/armand-fallieres',
@@ -222,7 +222,7 @@ export const imgPresident = [
   },
   {
     'name': 'Émile Loubet',
-    'lastName':'Loubet',
+    'lastName': 'Loubet',
     'mandat': '1899 - 1906',
     'src': 'assets/img/Emile-Loubet.jpeg',
     'url': 'https://www.elysee.fr/emile-loubet',
@@ -235,7 +235,7 @@ export const imgPresident = [
   },
   {
     'name': 'Félix Faure',
-    'lastName':'Faure',
+    'lastName': 'Faure',
     'mandat': '1895 - 1899',
     'src': 'assets/img/Felix-Faure.jpeg',
     'url': 'https://www.elysee.fr/felix-faure',
@@ -248,7 +248,7 @@ export const imgPresident = [
   },
   {
     'name': 'Jean Casimir-Perier',
-    'lastName':'Casimir-Perier',
+    'lastName': 'Casimir-Perier',
     'mandat': '1894 - 1895',
     'src': 'assets/img/Jean-Casimir-Perier.jpeg',
     'url': 'https://www.elysee.fr/jean-casimir-perier',
@@ -261,7 +261,7 @@ export const imgPresident = [
   },
   {
     'name': 'Sadi Carnot',
-    'lastName':'Carnot',
+    'lastName': 'Carnot',
     'mandat': '1887 - 1894',
     'src': 'assets/img/Sadi-Carnot.jpeg',
     'url': 'https://www.elysee.fr/sadi-carnot',
@@ -274,7 +274,7 @@ export const imgPresident = [
   },
   {
     'name': 'Jules Grévy',
-    'lastName':'Grévy',
+    'lastName': 'Grévy',
     'mandat': '1879 - 1887',
     'src': 'assets/img/Jules-Grevy.jpeg',
     'url': 'https://www.elysee.fr/jules-grevy',
@@ -287,7 +287,7 @@ export const imgPresident = [
   },
   {
     'name': 'Patrice de Mac Mahon',
-    'lastName':'Mac Mahon',
+    'lastName': 'Mac Mahon',
     'mandat': '1873 - 1879',
     'src': 'assets/img/Patrice-Mac-Mahon.jpeg',
     'url': 'https://www.elysee.fr/patrice-de-mac-mahon',
@@ -301,20 +301,20 @@ export const imgPresident = [
   },
   {
     'name': 'Adolphe Thiers',
-    'lastName':'Thiers',
+    'lastName': 'Thiers',
     'mandat': '1871 - 1873',
     'src': 'assets/img/Adolphe-Thiers.jpeg',
     'url': 'https://www.elysee.fr/adolphe-thiers',
     'indice': {
       'tip1': 'Il lance contre la capitale cinq corps d\'armée',
-      'tip2': 'Après des études au lycée de Marseille puis à Aix, où il obtient une licence en droit, il devient avocat',
+      'tip2': 'Une houppe et un physique sans grâce lui valent le surnom de « Foutriquet ».',
       'tip3': 'À la suite de l\'attentat de Fieschi, il fait voter les « lois de septembre »  restreignant la liberté de la presse',
       'tip4': 'Pour beaucoup il résume les petitesses et les cruautés de la bourgeoisie'
     }
   },
   {
     'name': 'Louis-Napoléon Bonaparte',
-    'lastName':'Bonaparte',
+    'lastName': 'Bonaparte',
     'mandat': '1848 - 1851',
     'src': 'assets/img/Louis-Napoleon-Bonaparte.jpeg',
     'url': 'https://www.elysee.fr/louis-napoleon-bonaparte',
