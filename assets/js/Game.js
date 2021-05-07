@@ -123,7 +123,7 @@ Game.prototype.emptyInput = function (e, w) {
 }
 
 Game.prototype.lostGame = function () {
-	this.resetWin();
+	this.endGame();
 	// this.elements.containerCards.innerHTML = "";
 	this.elements.containerCenter.removeChild(this.elements.containerCards);
 	this.hide(this.elements.containerCards);
@@ -390,7 +390,7 @@ Game.prototype.clickCard = function () {
 					// If all cards are flipped
 					if (this.countEven === (this.cardNumber / 2)) {
 						this.elements.containerCenter.removeChild(this.elements.containerCards);
-						this.resetWin();
+						this.endGame();
 					}
 				}
 				// If medals unmatched
@@ -419,7 +419,7 @@ Game.prototype.stopEvent = function () {
 }
 
 // Reset Game when user won
-Game.prototype.resetWin = function () {
+Game.prototype.endGame = function () {
 	this.show(this.elements.title);
 	this.show(this.elements.contentCenter);
 	this.elements.luckyGreets.removeAttribute('hidden');
@@ -470,7 +470,7 @@ Game.prototype.luckyGuess = function (e) {
 	e.preventDefault();
 	const userGuess = (this.elements.luckyInput.value).toLowerCase();
 	if (userGuess.includes(this.fullName) || userGuess.includes(this.lastName)) {
-		this.resetWin();
+		this.endGame();
 		this.elements.luckyError.setAttribute('hidden', '');
 		this.elements.containerCenter.removeChild(this.elements.containerCards);
 	}
