@@ -93,11 +93,9 @@
   }
 }
 
-
-
-
-
 #leftside {
+  position: relative;
+
   .logo {
     width: 220px;
   }
@@ -118,17 +116,30 @@
 
   .clock {
     @extend .input;
-    width: 200px;
+    width: 150px;
+    height: 150px;
     padding: 10px;
-    font-size: 1.7rem;
-    color: $colorBlue;
+    font-size: 1.8rem;
+    color: $grey;
     text-align: center;
     border: none;
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    -ms-border-radius: 12px;
-    -o-border-radius: 12px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }
+
+  #containclock {
+    position: relative;
+  }
+
+  #clock {
+    position: absolute;
+    top: 1.5rem;
+    left: -0.35rem;
+    background-color: transparent;
+
   }
 
   .leftside_content-btn {
@@ -138,8 +149,21 @@
     margin-bottom: 1em;
   }
 
-  .btn-tip {
+  .btn-tip,
+  .btn-startagain {
+    position: relative;
+    color: $white;
     margin-top: 3em;
+    background-color: transparent;
+
+    &:hover {
+      .tooltip {
+        display: block;
+      }
+
+      color: $colorRed;
+      background-color: $white;
+    }
   }
 }
 
@@ -233,7 +257,6 @@
   @extend .btn;
   @extend .input;
   height: 45px;
-  border: 2px solid $colorRed;
   border-radius: 5px;
   margin: 0.8em auto;
   transition: all ease-out .5s;

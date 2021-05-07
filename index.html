@@ -11,12 +11,14 @@
 <body>
   <div id="root">
     <div id="leftside">
-      <h2 class="logo">Mr le Président</h2>
       <div class="wrap-input">
-        <label for="pseudo">Votre pseudo</label>
-        <input type="text" class="left_input" id="pseudo" minLength="3" maxLength="25" size="10" placeholder="Maradona">
+        <input type="text" class="left_input" id="pseudo" minLength="3" maxLength="25" size="10"
+          placeholder="Votre pseudo">
       </div>
-      <div class="clock timer"></div>
+      <div id="containclock">
+        <div class="clock timer"></div>
+        <canvas id="clock" width="160" height="160"></canvas>
+      </div>
       <div class="leftside_content-btn">
         <div class="leftside_btn-start start"><span>Commencer</span><span><img
               src="assets/img/arrow_right_double_thin.png" alt=""></span></div>
@@ -30,10 +32,44 @@
           <button type="submit" class="btn-submit" id="lucky-submit">Je tente ma chance&nbsp;?</button>
         </form>
         <p id="error" hidden>Essaye encore !</p>
-        <button type="button" class="btn-submit btn-tip" id="seetip">Un indice ?</button>
+        <div role="button" class="btn-submit btn-tip" id="seetip">
+          <div class="tooltip tooltip__icon">
+            Un indice ?
+          </div>
+          <svg aria-hidden="true" class="reload" role="img" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32" height="32" viewBox="0 0 58 58"
+            style="enable-background:new 0 0 58 58;" xml:space="preserve">
+            <g>
+              <path style="fill:#EFCE4A;" d="M26.771,0.124C17.821,1.116,10.596,8.36,9.62,17.311C8.923,23.7,11.32,29.538,15.496,33.543
+        		c3.153,3.024,5.004,7.156,5.004,11.525V46h16v0c0-4.576,2.023-8.882,5.444-11.92c4.021-3.571,6.556-8.778,6.556-14.58
+        		C48.5,7.996,38.538-1.181,26.771,0.124z" />
+            </g>
+            <path style="fill:#FFFFFF;stroke:#ED8A19;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" d="M28.5,32L28.5,32
+        	c-2.2,0-4-1.8-4-4v0c0-2.2,1.8-4,4-4h0c2.2,0,4,1.8,4,4v0C32.5,30.2,30.7,32,28.5,32z" />
+            <line style="fill:none;stroke:#EBBA16;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" x1="28.5"
+              y1="46" x2="28.5" y2="28" />
+            <polygon style="fill:#C7CAC7;" points="31.5,58 25.5,58 22.5,54 34.5,54 " />
+            <rect x="20.5" y="50" style="fill:#E7ECED;" width="16" height="4" />
+            <rect x="20.5" y="46" style="fill:#C7CAC7;" width="16" height="4" />
+          </svg>
+        </div>
       </div>
-      <button type="button" class="btn-submit hide" id="start-again" hidden>Recommencer&nbsp;?</button>
-      <!-- <div class="rewards"></div> -->
+      <div role="button" class="btn-submit btn-startagain hide" id="start-again" hidden>
+        <div class="tooltip tooltip__icon">
+          Rejouer !
+        </div>
+        <svg aria-hidden="true" class="reload" role="img" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32" height="32" viewBox="0 0 342.5 342.5"
+          style="enable-background:new 0 0 342.5 342.5;" xml:space="preserve">
+          <path fill="currentColor" d="M254.37,22.255c-1.161-0.642-2.53-0.795-3.803-0.428c-1.274,0.367-2.35,1.226-2.992,2.387l-21.758,39.391
+      	c-1.335,2.417-0.458,5.459,1.96,6.794C264.616,90.748,287.5,129.495,287.5,171.52c0,63.649-51.782,115.431-115.431,115.431
+      	S56.638,235.169,56.638,171.52c0-23.888,7.557-47.427,21.382-66.897l34.478,34.478c1.338,1.337,3.315,1.806,5.109,1.21
+      	c1.795-0.596,3.101-2.152,3.374-4.024L139.963,6.271c0.228-1.563-0.295-3.141-1.412-4.258c-1.117-1.117-2.7-1.639-4.258-1.412
+      	L4.278,19.584c-1.872,0.273-3.428,1.579-4.023,3.374c-0.596,1.795-0.127,3.772,1.21,5.109l37.292,37.292
+      	C14.788,95.484,1.638,133,1.638,171.52c0,93.976,76.455,170.431,170.431,170.431c93.976,0,170.431-76.455,170.431-170.431
+      	C342.5,109.478,308.731,52.283,254.37,22.255z" />
+        </svg>
+      </div>
     </div>
     <div id="center">
       <div class="center-content hide">
@@ -107,11 +143,15 @@
       </div>
       <div class="score"></div>
       <div id="indices"></div>
-      <button type="button" class="more hide">En savoir +</button>
-      <span class="moreover">&nbsp;</span>
+      <div role="button" class="btn-more hide">
+        <div class="tooltip tooltip__icon">
+          En savoir + !
+        </div>
+      </div>
     </div>
   </div>
   <script src="assets/js/shuffle.js"></script>
+  <script src="assets/js/clock.js"></script>
   <script type="module" src="assets/js/game_v1.js"></script>
 </body>
 

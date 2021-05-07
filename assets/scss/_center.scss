@@ -55,10 +55,18 @@
       margin-top: 0.1rem;
       text-align: left;
 
-      .ranki {
-        &::first-letter {
-          text-transform: uppercase;
-        }
+      span.ranknum {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: $colorYellow;
+        display: inline-block;
+        text-align: center;
+        margin-right: 0.3em;
+      }
+
+      span.ranki {
+        text-transform: capitalize;
       }
     }
   }
@@ -131,6 +139,7 @@
   grid-column-gap: 1px;
 
   .card {
+    height: calc(100vh / 7);
     position: relative;
     background-color: $white;
     border: 1px solid $colorRed;

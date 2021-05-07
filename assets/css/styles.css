@@ -6,7 +6,6 @@
   flex-direction: column;
   align-items: center;
   margin-top: 1em;
-  color: #8A1C2C;
   padding: 5px 7px;
   background-color: #FFFFFF;
   border: none;
@@ -175,18 +174,44 @@ input {
   -ms-animation: fadeIn ease 2s;
 }
 
-.more {
-  position: relative;
-  top: 3em;
-  width: 150px;
-  border: 1px solid #226A8A;
+.tooltip {
+  padding: 10px;
+  position: absolute;
+  width: auto;
+  white-space: nowrap;
   border-radius: 5px;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%);
+  transform-style: preserve-3d;
+  z-index: 200;
+  font-size: 0.9em;
+  display: none;
+  height: 10px;
+  transform-origin: 50% 50%;
+  left: 50%;
+  z-index: 400;
+}
+.tooltip__icon {
+  color: #FFFFFF;
+}
+
+.btn-more {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #226A8A;
+  border-radius: 50%;
   transition: all 0.5s;
   cursor: pointer;
 }
-.more:hover {
+.btn-more:hover {
   color: #FFFFFF;
   background-color: #226A8A;
+}
+.btn-more::after {
+  content: "＋";
+  font-size: 35px;
+  padding-bottom: 0.2em;
 }
 
 @keyframes sweep {
@@ -371,6 +396,9 @@ input {
   color: #226A8A;
 }
 
+#leftside {
+  position: relative;
+}
 #leftside .logo {
   width: 220px;
 }
@@ -386,17 +414,27 @@ input {
   color: #FAFAFA;
 }
 #leftside .clock {
-  width: 200px;
+  width: 150px;
+  height: 150px;
   padding: 10px;
-  font-size: 1.7rem;
-  color: #226A8A;
+  font-size: 1.8rem;
+  color: #333333;
   text-align: center;
   border: none;
-  border-radius: 12px;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  -ms-border-radius: 12px;
-  -o-border-radius: 12px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+#leftside #containclock {
+  position: relative;
+}
+#leftside #clock {
+  position: absolute;
+  top: 1.5rem;
+  left: -0.35rem;
+  background-color: transparent;
 }
 #leftside .leftside_content-btn {
   width: 220px;
@@ -404,11 +442,24 @@ input {
   flex-direction: column;
   margin-bottom: 1em;
 }
-#leftside .btn-tip {
+#leftside .btn-tip,
+#leftside .btn-startagain {
+  position: relative;
+  color: #FFFFFF;
   margin-top: 3em;
+  background-color: transparent;
+}
+#leftside .btn-tip:hover,
+#leftside .btn-startagain:hover {
+  color: #8A1C2C;
+  background-color: #FFFFFF;
+}
+#leftside .btn-tip:hover .tooltip,
+#leftside .btn-startagain:hover .tooltip {
+  display: block;
 }
 
-.btn, .btn-submit, .content-btn .reset, .content-btn .start, .more {
+.btn, .btn-submit, .content-btn .reset, .content-btn .start, .btn-more {
   display: flex;
   justify-content: center;
   display: flex;
@@ -491,7 +542,6 @@ input {
 
 .btn-submit {
   height: 45px;
-  border: 2px solid #8A1C2C;
   border-radius: 5px;
   margin: 0.8em auto;
   transition: all ease-out 0.5s;
@@ -552,8 +602,17 @@ input {
   margin-top: 0.1rem;
   text-align: left;
 }
-.center-content .containrank #rank .ranki::first-letter {
-  text-transform: uppercase;
+.center-content .containrank #rank span.ranknum {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #D6D156;
+  display: inline-block;
+  text-align: center;
+  margin-right: 0.3em;
+}
+.center-content .containrank #rank span.ranki {
+  text-transform: capitalize;
 }
 .center-content .btn-clear {
   font-family: "Roboto";
@@ -618,6 +677,7 @@ input {
   grid-column-gap: 1px;
 }
 .cards__container .card {
+  height: calc(100vh / 7);
   position: relative;
   background-color: #FFFFFF;
   border: 1px solid #8A1C2C;
@@ -707,7 +767,7 @@ input {
 }
 #rightside .indice {
   color: #333333;
-  margin-top: 2em;
+  margin-top: 1em;
   width: 250px;
   font-size: 1.1rem;
   padding: 10px;

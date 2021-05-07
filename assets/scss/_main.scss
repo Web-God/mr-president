@@ -3,19 +3,23 @@ html {
   font-family: 'Roboto';
   height: 100vh;
 }
+
 %headingfontstyle {
   font-family: 'Garamond Medium';
   font-weight: 400;
   color: aliceblue;
 }
+
 h1 {
   @extend %headingfontstyle;
   font-size: 2rem;
 }
-h2{
+
+h2 {
   @extend %headingfontstyle;
   font-size: 1.5rem;
 }
+
 #root {
   min-height: 100vh;
   display: grid;
@@ -25,18 +29,20 @@ h2{
   grid-template-areas:
     ". . .";
 }
+
 input {
   @extend %input;
-    text-align: center;
-    font-size: 1.2em;
-    width: 250px;
-    height: 30px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
+  text-align: center;
+  font-size: 1.2em;
+  width: 250px;
+  height: 30px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
+
 #leftside {
   background-color: $colorBlue;
   @include flexCenterY;
@@ -51,6 +57,7 @@ input {
   background-color: $colorRed;
   @include flexCenterY;
 }
+
 // Fade In
 .fade-in {
   animation: fadeIn ease 2s;
@@ -60,13 +67,35 @@ input {
   -ms-animation: fadeIn ease 2s;
 }
 
-.more {
-  @extend .btn;
-  position: relative;
-  top: 3em;
-  width: 150px;
-  border: 1px solid $colorBlue;
+.tooltip {
+  padding: 10px;
+  position: absolute;
+  width: auto;
+  white-space: nowrap;
   border-radius: 5px;
+  top: 40px;
+  left: 50%;
+  transform: translate(-50%);
+  transform-style: preserve-3d;
+  z-index: 200;
+  font-size: 0.9em;
+  display: none;
+  height: 10px;
+  transform-origin: 50% 50%;
+  left: 50%;
+  z-index: 400;
+
+  &__icon {
+    color: $white;
+  }
+}
+
+.btn-more {
+  @extend .btn;
+  width: 50px;
+  height: 50px;
+  border: 3px solid $colorBlue;
+  border-radius: 50%;
   transition: all .5s;
   cursor: pointer;
 
@@ -74,16 +103,25 @@ input {
     color: $white;
     background-color: $colorBlue;
   }
+
+  &::after {
+    content: "\FF0B";
+    font-size: 35px;
+    padding-bottom: .2em;
+  }
 }
+
 @keyframes sweep {
   0% {
     left: 0;
     width: 0;
   }
+
   100% {
     width: 150px;
   }
 }
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -133,6 +171,7 @@ input {
     opacity: 1;
   }
 }
+
 // FadeOut
 .fade-out {
   animation: fadeOut ease 2s;
@@ -191,14 +230,17 @@ input {
     opacity: 0;
   }
 }
+
 @keyframes translateLeft {
   0% {
     left: 0;
   }
+
   50% {
     left: 5px;
   }
-  100%{
+
+  100% {
     left: 0;
   }
 }

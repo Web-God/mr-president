@@ -42,6 +42,7 @@ export function Game() {
 	this.elements.pseudoInput.focus();
 	this.shufflePhotos(0);
 	this.displayChrono(this.initChrono, 0);
+	this.clockwork = clockwork();
 }
 
 Game.prototype.registerElements = function () {
@@ -60,7 +61,7 @@ Game.prototype.registerElements = function () {
 		btnCloseRank: document.querySelector('.btn-close-rank'),
 		clearSession: document.getElementById('clearsession'),
 		rules: document.querySelector('.rules'),
-		btnSeeMore: document.querySelector('.more'),
+		btnSeeMore: document.querySelector('.btn-more'),
 		// Display variables pic's president + tips
 		containerCenter: document.getElementById('center'),
 		contentCenter: document.querySelector('.center-content'),
@@ -106,8 +107,8 @@ Game.prototype.events = function () {
 }
 
 Game.prototype.rankRemove = function () {
-	this.elements.rankDisplay.querySelectorAll('.ranki').forEach(() => {
-		document.querySelector('.ranki').remove();
+	this.elements.rankDisplay.querySelectorAll('.rankplayers').forEach(() => {
+		document.querySelector('.rankplayers').remove();
 		this.hide(this.elements.clearSession);
 	})
 }
@@ -133,7 +134,7 @@ Game.prototype.lostGame = function () {
 
 Game.prototype.displayChrono = function (m, s) {
 	m = this.initChrono;
-	this.elements.clock.innerHTML = `${m}m  ${s}s`;
+	this.elements.clock.innerHTML = `${m} :  ${s}`;
 	this.elements.scoreDisplay.innerHTML = `${this.initPoints} points`;
 }
 
@@ -149,7 +150,7 @@ Game.prototype.timerGame = function () {
 		this.minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
 		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
 
-		this.elements.clock.innerHTML = `${this.minutes}m ${this.seconds}s`;
+		this.elements.clock.innerHTML = `${this.minutes} : ${this.seconds}`;
 
 		if (this.minutes === 0 && this.seconds === 0) {
 			clearInterval(this.clockId);
@@ -440,9 +441,9 @@ Game.prototype.resetWin = function () {
 		tip.classList.remove('hide');
 		return tip.innerHTML = text;
 	}).join('');
-
+	let iPseudo = this.pseudo.value() === "" ? "Joueur" : this.pseudo.value();
 	var highscore = this.setHighscore({
-		pseudo: this.pseudo.value(),
+		pseudo: iPseudo,
 		points: this.points
 	});
 
@@ -452,8 +453,8 @@ Game.prototype.resetWin = function () {
 		return b.points - a.points;
 	});
 	if (this.ranking !== null) {
-		this.elements.rankDisplay.insertAdjacentHTML("beforeend", ranking2.map((rank) => {
-			return `<div class="ranki">${Object.values(rank).join(" : ")}</div>`;
+		this.elements.rankDisplay.insertAdjacentHTML("beforeend", ranking2.map((rank, i) => {
+			return `<div class="rankplayers"><span class="ranknum">${i + 1} </span><span class="ranki">${Object.values(rank).join(" : ")}</span></div>`;
 		}).join(" "));
 		this.show(this.elements.rankContainer);
 		this.elements.rankContainer.classList.remove('close');
