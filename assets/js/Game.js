@@ -56,6 +56,7 @@ Game.prototype.registerElements = function () {
 		btnSeeTip: document.getElementById('seetip'),
 		scoreDisplay: document.querySelector('.score'),
 		clock: document.querySelector('.timer'),
+		btnSeeRules: document.querySelector('.btn-see-rules'),
 		btnCloseRules: document.querySelector('.btn-close-rules'),
 		btnCloseGreets: document.querySelector('.btn-close-greets'),
 		btnCloseRank: document.querySelector('.btn-close-rank'),
@@ -104,6 +105,17 @@ Game.prototype.events = function () {
 	});
 	// Close rank container
 	this.elements.btnCloseRank.addEventListener('click', () => this.elements.rankContainer.classList.add('close', 'hide'));
+	// Open/close rules
+	let showhideRules = ["Voir les règles", "Cacher les règles"];
+	this.elements.btnSeeRules.addEventListener('click', () => {
+		this.elements.rules.classList.toggle('close');
+		this.elements.btnSeeRules.classList.toggle('active');
+		this.elements.btnSeeRules.classList.contains('active') ? this.elements.btnSeeRules.innerHTML = showhideRules[0] : this.elements.btnSeeRules.innerHTML = showhideRules[1];
+	});
+	this.elements.btnCloseRules.addEventListener('click', () => {
+		this.elements.btnSeeRules.innerHTML = showhideRules[0]
+		this.elements.btnSeeRules.classList.add('active');
+	});
 }
 
 Game.prototype.rankRemove = function () {
@@ -242,6 +254,7 @@ Game.prototype.setHighscore = function (score) {
 	highscore.length <= 9 ? highscore.push(score) : null;
 	sessionStorage.setItem('highscore', JSON.stringify(highscore));
 }
+
 Game.prototype.getHighscore = function () {
 	let highscore;
 	try {
@@ -441,6 +454,11 @@ Game.prototype.endGame = function () {
 		tip.classList.remove('hide');
 		return tip.innerHTML = text;
 	}).join('');
+
+	this.displayRankingPlayers();
+}
+
+Game.prototype.displayRankingPlayers = function () {
 	let iPseudo = this.pseudo.value() === "" ? "Joueur" : this.pseudo.value();
 	var highscore = this.setHighscore({
 		pseudo: iPseudo,

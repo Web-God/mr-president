@@ -46,6 +46,7 @@ input {
 #leftside {
   background-color: $colorBlue;
   @include flexCenterY;
+  justify-content: space-evenly;
 }
 
 #center {

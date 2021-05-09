@@ -2,7 +2,6 @@
 #rightside .score, input {
   display: flex;
   justify-content: center;
-  display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 1em;
@@ -151,6 +150,7 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 #center {
@@ -458,6 +458,14 @@ input {
 #leftside .btn-startagain:hover .tooltip {
   display: block;
 }
+#leftside .btn-see-rules {
+  color: #333333;
+  cursor: pointer;
+  padding: 5px 7px;
+}
+#leftside .btn-see-rules:hover {
+  color: #FFFFFF;
+}
 
 .btn, .btn-submit, .content-btn .reset, .content-btn .start, .btn-more {
   display: flex;
@@ -755,6 +763,7 @@ input {
   text-transform: capitalize;
 }
 #rightside .score {
+  color: #226A8A;
   text-align: center;
   font-size: 2em;
   width: 250px;

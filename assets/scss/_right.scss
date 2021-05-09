@@ -10,6 +10,7 @@
 
   .score {
     @extend %input;
+    color: $colorBlue;
     text-align: center;
     font-size: 2em;
     width: 250px;
