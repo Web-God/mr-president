@@ -32,7 +32,7 @@ export function Game() {
 
 	this.hide = elem => elem.classList.add('hide');
 	this.show = elem => elem.classList.remove('hide');
-	this.showhideTextRules = ["Voir les règles", "Cacher les règles"];
+	this.showhideTextRules = ["Voir la règle", "Cacher la règle"];
 
 	// Shuffle photos & cards
 	this.shuffledCards = shuffle(medals);
@@ -495,6 +495,7 @@ Game.prototype.displayRankingPlayers = function () {
 		}).join(" "));
 		this.show(this.elements.rankContainer);
 		this.elements.rankContainer.classList.remove('close');
+		this.elements.btnSeeRank.classList.remove('close');
 		this.show(this.elements.clearSession);
 	} else {
 		this.hide(this.elements.rankContainer);
