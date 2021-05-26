@@ -17,6 +17,7 @@ export function Game() {
 	this.initChrono = 2;
 	this.initPoints = 1000;
 	this.clockId = null;
+	this.elapsedTime = 1000;
 
 	this.pseudo = {
 		score: `${this.points} points`,
@@ -31,6 +32,7 @@ export function Game() {
 
 	this.hide = elem => elem.classList.add('hide');
 	this.show = elem => elem.classList.remove('hide');
+	this.showhideTextRules = ["Voir les règles", "Cacher les règles"];
 
 	// Shuffle photos & cards
 	this.shuffledCards = shuffle(medals);
@@ -54,12 +56,13 @@ Game.prototype.registerElements = function () {
 		btnStartAgain: document.getElementById('start-again'),
 		btnReset: document.querySelector('.reset'),
 		btnSeeTip: document.getElementById('seetip'),
-		scoreDisplay: document.querySelector('.score'),
+		screenScore: document.querySelector('.score'),
 		clock: document.querySelector('.timer'),
 		btnSeeRules: document.querySelector('.btn-see-rules'),
 		btnCloseRules: document.querySelector('.btn-close-rules'),
 		btnCloseGreets: document.querySelector('.btn-close-greets'),
 		btnCloseRank: document.querySelector('.btn-close-rank'),
+		btnSeeRank: document.querySelector('.btn-see-rank'),
 		clearSession: document.getElementById('clearsession'),
 		rules: document.querySelector('.rules'),
 		btnSeeMore: document.querySelector('.btn-more'),
@@ -98,24 +101,35 @@ Game.prototype.events = function () {
 	this.elements.btnSeeTip.addEventListener('click', this.indicesReveal.bind(this));
 	// Open new tab to Elysée website
 	this.elements.btnSeeMore.addEventListener('click', () => window.open(this.locationUrl, '_blank'));
-	// Remove rank data
+	// Remove rank datas
 	this.elements.clearSession.addEventListener('click', () => {
 		sessionStorage.clear();
 		this.rankRemove();
 	});
-	// Close rank container
+	// Open / close rank container
 	this.elements.btnCloseRank.addEventListener('click', () => this.elements.rankContainer.classList.add('close', 'hide'));
+	this.elements.btnSeeRank.addEventListener('click', () => this.elements.rankContainer.classList.remove('close', 'hide'));
 	// Open/close rules
-	let showhideRules = ["Voir les règles", "Cacher les règles"];
-	this.elements.btnSeeRules.addEventListener('click', () => {
-		this.elements.rules.classList.toggle('close');
-		this.elements.btnSeeRules.classList.toggle('active');
-		this.elements.btnSeeRules.classList.contains('active') ? this.elements.btnSeeRules.innerHTML = showhideRules[0] : this.elements.btnSeeRules.innerHTML = showhideRules[1];
-	});
-	this.elements.btnCloseRules.addEventListener('click', () => {
-		this.elements.btnSeeRules.innerHTML = showhideRules[0]
-		this.elements.btnSeeRules.classList.add('active');
-	});
+	this.elements.btnCloseRules.addEventListener('click', this.hideCrossRules.bind(this));
+	this.elements.btnSeeRules.addEventListener('click', this.toggleBtnRules.bind(this));
+}
+
+Game.prototype.hideCrossRules = function () {
+	this.elements.rules.classList.add('close');
+	this.elements.btnSeeRules.classList.add('active');
+	this.elements.btnSeeRules.innerHTML = this.showhideTextRules[0];
+}
+
+Game.prototype.toggleBtnRules = function () {
+	this.elements.btnSeeRules.classList.toggle('active');
+	if (this.elements.btnSeeRules.classList.contains('active')) {
+		this.elements.rules.classList.add('close');
+		this.elements.btnSeeRules.innerHTML = this.showhideTextRules[0];
+	}
+	else {
+		this.elements.rules.classList.remove('close');
+		this.elements.btnSeeRules.innerHTML = this.showhideTextRules[1];
+	}
 }
 
 Game.prototype.rankRemove = function () {
@@ -136,35 +150,39 @@ Game.prototype.emptyInput = function (e, w) {
 
 Game.prototype.lostGame = function () {
 	this.endGame();
-	// this.elements.containerCards.innerHTML = "";
 	this.elements.containerCenter.removeChild(this.elements.containerCards);
 	this.hide(this.elements.containerCards);
 	this.elements.containerCards.remove();
 	this.elements.nbrClick.previousElementSibling.innerHTML = "";
 	this.elements.nbrClick.innerHTML = `<span class='greet-name'> ${this.pseudo.value()} </span> vous avez perdu !<div> ${this.fullName} </div> est élu.`;
+	this.displayScore();
 }
 
 Game.prototype.displayChrono = function (m, s) {
 	m = this.initChrono;
 	this.elements.clock.innerHTML = `${m} :  ${s}`;
-	this.elements.scoreDisplay.innerHTML = `${this.initPoints} points`;
+	this.displayScore();
+}
+
+Game.prototype.displayScore = function () {
+	this.elements.screenScore.innerHTML = `${this.initPoints} points`;
 }
 
 Game.prototype.timerGame = function () {
 	let startChrono = new Date(1980, 6, 31, 1, this.initChrono, 0).getTime();
 	let endChrono = new Date(1980, 6, 31, 1).getTime();
 
-	let elapsedTime = startChrono - endChrono;
-
+	this.elapsedTime = startChrono - endChrono;
 	this.clockId = setInterval(() => {
-		elapsedTime -= 1000;
+		this.elapsedTime -= 1000;
 
-		this.minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
-		this.seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+		this.minutes = Math.floor((this.elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+		this.seconds = Math.floor((this.elapsedTime % (1000 * 60)) / 1000);
 
 		this.elements.clock.innerHTML = `${this.minutes} : ${this.seconds}`;
 
-		if (this.minutes === 0 && this.seconds === 0) {
+		if (this.elapsedTime === 0) {
+			this.points = 0;
 			clearInterval(this.clockId);
 			this.lostGame();
 		}
@@ -174,11 +192,11 @@ Game.prototype.timerGame = function () {
 }
 
 Game.prototype.resetTimer = function () {
-	this.points = this.initPoints;
 	this.minutes = this.initChrono;
 	this.seconds = 0;
+	this.points = this.initPoints;
 	clearInterval(this.clockId);
-	this.elements.scoreDisplay.innerHTML = `${this.points} points`;
+	this.displayScore();
 	this.displayChrono(this.initChrono, 0);
 }
 
@@ -280,7 +298,7 @@ Game.prototype.startGame = function (n, w) {
 	this.init();
 	this.enableBtn();
 	this.elements.luckyInput.setAttribute('placeholder', shuffle(women)[w]);
-	this.elements.rules.classList.add('close');
+	this.hideCrossRules();
 	this.elements.luckyInput.disabled = false;
 	this.elements.btnStart.classList.add('trans');
 }
@@ -346,6 +364,7 @@ Game.prototype.enableBtn = function () {
 	this.show(this.elements.btnSeeTip);
 	this.elements.luckyInput.value = "";
 	this.elements.luckyInput.focus();
+	this.elements.btnSeeRules.classList.remove('active');
 }
 
 // Display Indices
@@ -501,6 +520,5 @@ Game.prototype.luckyGuess = function (e) {
 Game.prototype.scoreTotal = function () {
 	this.setScoreMinus(1);
 	this.total = `${this.points} points`;
-	this.points === 0 ? this.lostGame() : null;
-	this.elements.scoreDisplay.innerHTML = this.total;
+	this.elements.screenScore.innerHTML = this.total;
 };

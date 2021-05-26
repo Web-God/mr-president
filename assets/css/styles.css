@@ -458,12 +458,13 @@ input {
 #leftside .btn-startagain:hover .tooltip {
   display: block;
 }
-#leftside .btn-see-rules {
+#leftside .btn-text {
   color: #333333;
   cursor: pointer;
   padding: 5px 7px;
+  transition: color 0.3s;
 }
-#leftside .btn-see-rules:hover {
+#leftside .btn-text:hover {
   color: #FFFFFF;
 }
 
@@ -662,9 +663,9 @@ input {
   content: "⨯";
   /* https://www.fileformat.info/info/unicode/char/2a2f/index.htm */
   font-size: 35px;
-  color: #226A8A;
+  color: #FFFFFF;
   margin-left: 94%;
-  transition: transform 0.5s;
+  transition: all 0.5s;
 }
 :is(.btn-close-rules, .btn-close-greets, .btn-close-rank):hover::after {
   color: #8A1C2C;

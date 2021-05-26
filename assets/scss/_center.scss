@@ -114,9 +114,9 @@
     content: "\2A2F";
     /* https://www.fileformat.info/info/unicode/char/2a2f/index.htm */
     font-size: 35px;
-    color: $colorBlue;
+    color: $white;
     margin-left: 94%;
-    transition: transform 0.5s;
+    transition: all 0.5s;
   }
 
   &:hover::after {

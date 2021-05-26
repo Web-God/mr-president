@@ -166,10 +166,11 @@
     }
   }
 
-  .btn-see-rules {
+  .btn-text {
     color: $grey;
     cursor: pointer;
     padding: 5px 7px;
+    transition: color .3s;
 
     &:hover {
       color: $white;
